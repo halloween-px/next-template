@@ -1,4 +1,4 @@
-import { Container } from '../shared/сontainer';
+import { Container } from '../../shared/сontainer';
 
 export function Footer() {
 	return (

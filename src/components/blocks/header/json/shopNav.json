@@ -1,0 +1,80 @@
+[
+	{
+		"title": "Каталог",
+		"href": "/catalog",
+		"items": [
+			{
+				"title": "Новинки",
+				"href": "/catalog/new",
+				"description": "Самые свежие поступления этого сезона."
+			},
+			{
+				"title": "Одежда",
+				"href": "/catalog/clothing",
+				"description": "Футболки, худи, брюки и верхняя одежда."
+			},
+			{
+				"title": "Аксессуары",
+				"href": "/catalog/accessories",
+				"description": "Сумки, ремни, головные уборы и украшения."
+			},
+			{
+				"title": "Распродажа %",
+				"href": "/catalog/sale",
+				"description": "Лучшие предложения со скидками до 70%."
+			}
+		]
+	},
+	{
+		"title": "Покупателям",
+		"href": "/info",
+		"items": [
+			{
+				"title": "Доставка и оплата",
+				"href": "/info/shipping",
+				"description": "Способы доставки, сроки и варианты оплаты заказа."
+			},
+			{
+				"title": "Обмен и возврат",
+				"href": "/info/returns",
+				"description": "Как вернуть товар или обменять его на другой размер."
+			},
+			{
+				"title": "Таблица размеров",
+				"href": "/info/size-guide",
+				"description": "Поможем подобрать идеальный размер по вашим меркам."
+			},
+			{
+				"title": "FAQ",
+				"href": "/info/faq",
+				"description": "Ответы на самые часто задаваемые вопросы."
+			}
+		]
+	},
+	{
+		"title": "О компании",
+		"href": "/about",
+		"items": [
+			{
+				"title": "О бренде",
+				"href": "/about/brand",
+				"description": "Наша история, ценности и подход к производству."
+			},
+			{
+				"title": "Магазины",
+				"href": "/about/stores",
+				"description": "Адреса офлайн точек и графики работы."
+			},
+			{
+				"title": "Блог",
+				"href": "/blog",
+				"description": "Статьи о стиле, трендах и закулисье бренда."
+			},
+			{
+				"title": "Контакты",
+				"href": "/contacts",
+				"description": "Свяжитесь с нами любым удобным способом."
+			}
+		]
+	}
+]

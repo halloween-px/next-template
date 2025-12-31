@@ -41,12 +41,27 @@
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
 	--radius-xl: calc(var(--radius) + 4px);
+
+	/* // height */
 	--height-footer: 90px;
 	--height-header: 65px;
+
+	/* // spacing */
 	--padding-section: 100px;
 	--margin-section: 100px;
 	--padding-section-sm: 60px;
 	--margin-section-sm: 60px;
+	--space-y-block: 2rem;
+	--space-x-grid: 1.5rem;
+
+	/* // fonts */
+	--font-size-h1: 3.5rem;
+	--font-size-h2: 2.25rem;
+	--font-size-body: 1rem;
+	--line-height-body: 1.6;
+
+	/* // animate */
+	--animate-fade-in: fade-in 0.5s ease-out;
 }
 
 :root {

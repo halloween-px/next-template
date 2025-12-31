@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { redirect } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { cn } from '@/lib/utils/utils';
+import { cn } from '@/lib/utils';
 import { useMutation } from '@/hooks/useMutation';
 import { defaultLoginSchema, LoginInput, loginSchema } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -28,6 +28,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
 
 	const onSubmit = async (data: LoginInput) => {
 		const user = (await mutate(data)).data || null;
+		if (!user) return;
 		setUser(user);
 		redirect('/');
 	};

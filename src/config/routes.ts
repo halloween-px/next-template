@@ -1,4 +1,4 @@
-const ROUTES = {
+export const ROUTES = {
 	about: '/about',
 	template: '/template',
 };

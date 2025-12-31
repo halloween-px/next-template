@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { redirect } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { cn } from '@/lib/utils/utils';
+import { cn } from '@/lib/utils';
 import { useMutation } from '@/hooks/useMutation';
 import { useForm } from 'react-hook-form';
 import { defaultRegisterSchema, registerSchema, type RegisterInput } from '@/lib/validations/auth';

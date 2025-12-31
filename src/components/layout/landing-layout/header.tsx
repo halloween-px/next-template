@@ -3,9 +3,25 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/shared/сontainer';
-import { useUserContext } from '../providers/user-provider';
+import { useUserContext } from '../../providers/user-provider';
 import { useMutation } from '@/hooks/useMutation';
 import { API_ROUTES } from '@/config/api-routes';
+import { ROUTES } from '@/config/routes';
+
+const navigations = [
+	{
+		label: 'Шаблон',
+		href: ROUTES.template,
+	},
+	{
+		label: 'О нас',
+		href: ROUTES.about,
+	},
+	{
+		label: 'Контакты',
+		href: '/contact',
+	},
+];
 
 export function Header() {
 	const { user, logout } = useUserContext();
@@ -24,12 +40,14 @@ export function Header() {
 						Template
 					</Link>
 					<nav className='hidden md:flex gap-6'>
-						<Link href='/' className='text-sm font-medium hover:text-primary'>
-							Главная
-						</Link>
-						<Link href='/about' className='text-sm font-medium hover:text-primary'>
-							О нас
-						</Link>
+						{navigations.map((navigation) => (
+							<Link
+								key={navigation.href}
+								href={navigation.href}
+								className='text-sm font-medium hover:text-primary'>
+								{navigation.label}
+							</Link>
+						))}
 						{user?.role === 'admin' && (
 							<Link href='/admin' className='text-sm font-medium hover:text-primary'>
 								Админка

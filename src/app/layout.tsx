@@ -6,7 +6,6 @@ import { ThemeProvider } from '@/components/providers/theme-provider';
 import { getSession } from '@/services/auth';
 import { UserProvider } from '@/components/providers/user-provider';
 import { ReactNode } from 'react';
-import { MainLayout } from '@/components/layout/main-layout';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,9 +25,7 @@ export default async function RootLayout({
 		<html lang='ru' suppressHydrationWarning>
 			<body className={inter.className}>
 				<UserProvider initialUser={user}>
-					<ThemeProvider>
-						<MainLayout>{children}</MainLayout>
-					</ThemeProvider>
+					<ThemeProvider>{children}</ThemeProvider>
 				</UserProvider>
 				<Toaster />
 			</body>
