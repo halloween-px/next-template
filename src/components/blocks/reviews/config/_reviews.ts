@@ -15,7 +15,7 @@ export const reviewsConfig: TReviews = {
 				id: '1',
 				name: 'Иван Сидоров',
 				role: 'CEO, TechStart',
-				avatar: '/placeholder.svg?height=100&width=100',
+				avatar: 'https://github.com/shadcn.png',
 				textContent:
 					'Команда превзошла все наши ожидания. Проект был завершен в срок и превосходного качества. Рекомендуем!',
 				rating: 5,
@@ -24,7 +24,7 @@ export const reviewsConfig: TReviews = {
 				id: '2',
 				name: 'Анна Кузнецова',
 				role: 'Product Manager, InnovateLab',
-				avatar: '/placeholder.svg?height=100&width=100',
+				avatar: '',
 				textContent:
 					'Профессиональный подход и отличное понимание бизнес-задач. Результат превзошел наши ожидания.',
 				rating: 5,
@@ -33,7 +33,7 @@ export const reviewsConfig: TReviews = {
 				id: '3',
 				name: 'Павел Морозов',
 				role: 'Founder, StartupHub',
-				avatar: '/placeholder.svg?height=100&width=100',
+				avatar: 'https://github.com/shadcn.png',
 				textContent:
 					'Отличная команда! Быстрая разработка, качественный код и приятное общение. Будем работать снова.',
 				rating: 5,
@@ -42,7 +42,7 @@ export const reviewsConfig: TReviews = {
 				id: '4',
 				name: 'Ольга Николаева',
 				role: 'CTO, DigitalSolutions',
-				avatar: '/placeholder.svg?height=100&width=100',
+				avatar: '',
 				textContent:
 					'Впечатлены уровнем экспертизы и вниманием к деталям. Проект реализован на высшем уровне.',
 				rating: 5,

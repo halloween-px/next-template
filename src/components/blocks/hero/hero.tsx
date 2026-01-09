@@ -44,7 +44,7 @@ const Hero = ({ slides }: THeroContent) => {
 			className='relative w-full'>
 			<CarouselContent>
 				{slides?.map((slide, index) => (
-					<CarouselItem key={index}>
+					<CarouselItem key={index} slidesCount={1}>
 						<div className='relative h-[calc(100vh-var(--height-header))] w-full'>
 							{/* Background Image with Overlay */}
 							<div className='absolute inset-0'>

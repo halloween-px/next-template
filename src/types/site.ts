@@ -1,9 +1,9 @@
 import { TAboutContent } from '@/components/blocks/about/type';
 import { THeroContent } from '@/components/blocks/hero/type';
 import { TPortfoliosContent } from '@/components/blocks/portfolios/types';
+import { TReviewsContent } from '@/components/blocks/reviews/types';
 import { TServicesContent } from '@/components/blocks/services/types';
 import { TTeamsContent } from '@/components/blocks/team/types';
-import { string } from 'zod';
 
 export type ColorScheme = 'light' | 'dark';
 
@@ -101,9 +101,9 @@ export type Block =
 	| { id: string; type: string; content: TAboutContent }
 	| { id: string; type: string; content: TServicesContent }
 	| { id: string; type: string; content: TPortfoliosContent }
-	| { id: string; type: string; content: TTeamsContent };
-// | { id: string; type: 'testimonials'; content: TestimonialsContent }
-// | { id: string; type: 'contact'; content: ContactContent };
+	| { id: string; type: string; content: TTeamsContent }
+	| { id: string; type: string; content: TReviewsContent }
+	| { id: string; type: string; content: any };
 
 export type BlockType = Block['type'];
 

@@ -27,7 +27,7 @@ const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string
 	}
 };
 
-export function Header() {
+export function Header({ linkToMain }: { linkToMain?: string }) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -35,7 +35,7 @@ export function Header() {
 			<Container>
 				<div className='container flex h-16 items-center justify-between'>
 					{/* Logo */}
-					<Link href='/' className='flex items-center gap-2'>
+					<Link href={linkToMain || '/'} className='flex items-center gap-2'>
 						<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-primary'>
 							<span className='text-lg font-bold text-primary-foreground'>V</span>
 						</div>
@@ -55,6 +55,7 @@ export function Header() {
 													<li key={subItem.title}>
 														<NavigationMenuLink asChild>
 															<Link
+																onClick={(e) => handleSmoothScroll(e, subItem.href)}
 																href={subItem.href}
 																className={cn(
 																	'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground'

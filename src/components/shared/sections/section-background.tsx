@@ -10,7 +10,8 @@ interface SectionBackgroundProps {
 		| 'orbs'
 		| 'orbs-animated'
 		| 'clean'
-		| 'gradient-multi';
+		| 'gradient-multi'
+		| 'orbs-pprimary';
 	className?: string;
 }
 
@@ -30,7 +31,6 @@ export const SectionBackground = ({ variant = 'clean', className }: SectionBackg
 			{/* Grid pattern background */}
 			{variant === 'grid' && (
 				<>
-					<div className='absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background' />
 					<div className='absolute inset-0 opacity-20'>
 						<div
 							className='absolute inset-0'
@@ -40,6 +40,9 @@ export const SectionBackground = ({ variant = 'clean', className }: SectionBackg
 							}}
 						/>
 					</div>
+
+					<div className='absolute top-40 left-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl' />
+					<div className='absolute bottom-40 right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl' />
 				</>
 			)}
 
@@ -66,6 +69,13 @@ export const SectionBackground = ({ variant = 'clean', className }: SectionBackg
 						<div className='absolute top-20 right-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl' />
 						<div className='absolute bottom-20 left-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl' />
 					</div>
+				</>
+			)}
+
+			{variant === 'orbs-pprimary' && (
+				<>
+					<div className='absolute top-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl' />
+					<div className='absolute bottom-20 left-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl' />
 				</>
 			)}
 

@@ -9,15 +9,11 @@ import { useState } from 'react';
 import { TPortfoliosContent } from './types';
 import { Container } from '@/components/shared/сontainer';
 import { SectionTitle } from '@/components/shared/sections/section-title';
+import { Section } from '@/components/shared/sections/section';
+import { SectionBackground } from '@/components/shared/sections/section-background';
+import { EmptyBlock } from '@/components/shared/empty/empty-block';
 
-const Portfolio = ({
-	categories,
-	description,
-	image,
-	projects,
-	subtitle,
-	title,
-}: TPortfoliosContent) => {
+const Portfolio = ({ categories, description, projects, subtitle, title }: TPortfoliosContent) => {
 	const [activeCategory, setActiveCategory] = useState('Все');
 
 	const filteredProjects =
@@ -26,30 +22,28 @@ const Portfolio = ({
 			: projects.filter((project) => project.category === activeCategory);
 
 	return (
-		<section id='portfolio' className='relative py-24 overflow-hidden'>
-			{/* Background decorations */}
-			<div className='absolute inset-0 -z-10'>
-				<div className='absolute top-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl' />
-				<div className='absolute bottom-20 left-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl' />
-			</div>
+		<Section id='portfolio'>
+			<SectionBackground variant='orbs-pprimary' />
 			<Container>
 				<div className='container px-4 md:px-6'>
 					<SectionTitle title={title} subtitle={subtitle} description={description} />
 
-					{/* Category filters */}
 					<div className='flex flex-wrap justify-center gap-2 mb-12'>
-						{categories.map((category) => (
-							<Button
-								key={category}
-								variant={activeCategory === category ? 'default' : 'outline'}
-								onClick={() => setActiveCategory(category)}
-								className='transition-all'>
-								{category}
-							</Button>
-						))}
+						{categories.map((category) => {
+							return (
+								<Button
+									key={category}
+									variant={activeCategory === category ? 'default' : 'outline'}
+									onClick={() => setActiveCategory(category)}
+									className='transition-all'>
+									{category}
+								</Button>
+							);
+						})}
 					</div>
-
-					{/* Projects grid */}
+					<div className='flex justify-center'>
+						{filteredProjects.length === 0 && <EmptyBlock title='Проекты не найдены' />}
+					</div>
 					<div className='grid gap-8 md:grid-cols-2'>
 						{filteredProjects.map((project) => (
 							<Card
@@ -94,9 +88,11 @@ const Portfolio = ({
 							</Card>
 						))}
 					</div>
+
+					{/* Projects grid */}
 				</div>
 			</Container>
-		</section>
+		</Section>
 	);
 };
 

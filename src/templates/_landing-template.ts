@@ -1,11 +1,10 @@
 import { heroConfig } from '@/components/blocks/hero/config/_hero';
-import { navigationTemplate } from './_navigation';
-import { aboutConfig } from '@/components/blocks/about/config/_about';
 import { servicesConfig } from '@/components/blocks/services/config/_services';
 import { portfoliosConfig } from '@/components/blocks/portfolios/config/_portfolios';
 import { teamsConfig } from '@/components/blocks/team/config/_team';
 import { reviewsConfig } from '@/components/blocks/reviews/config/_reviews';
 import { contactsConfig } from '@/components/blocks/contacts/config/_contacts';
+import { defaultAboutConfig } from './registry';
 
 export const landingTemplate = {
 	id: 'site-tech-company',
@@ -19,7 +18,6 @@ export const landingTemplate = {
 			body: 'Geist',
 		},
 	},
-	navigation: navigationTemplate,
 	pages: [
 		{
 			id: 'main-landing',
@@ -32,7 +30,7 @@ export const landingTemplate = {
 			},
 			sections: [
 				heroConfig,
-				aboutConfig,
+				defaultAboutConfig,
 				servicesConfig,
 				portfoliosConfig,
 				teamsConfig,

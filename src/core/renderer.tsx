@@ -1,18 +1,21 @@
 'use client';
-import { ABOUT_TYPE } from '@/components/blocks/about/config/_about';
+
 import { CONTACTS_TYPE } from '@/components/blocks/contacts/config/_contacts';
 import { HERO_TYPE } from '@/components/blocks/hero/config/_hero';
 import { PORTFOLIOS_TYPE } from '@/components/blocks/portfolios/config/_portfolios';
 import { REVIEWS_TYPE } from '@/components/blocks/reviews/config/_reviews';
 import { SERVICES_TYPE } from '@/components/blocks/services/config/_services';
 import { TEAMS_TYPE } from '@/components/blocks/team/config/_team';
+import { ABOUT_TYPES } from '@/templates/registry/_about';
 import { Block } from '@/types/site';
 
 import dynamic from 'next/dynamic';
 import { ComponentType } from 'react';
 
 const BLOCKS_MAP: Record<string, ComponentType<any>> = {
-	[ABOUT_TYPE]: dynamic(() => import('@/components/blocks/about/about')),
+	[ABOUT_TYPES.V1]: dynamic(() => import('@/components/blocks/about/about')),
+	[ABOUT_TYPES.V2]: dynamic(() => import('@/components/blocks/about/variants/about-v2')),
+
 	[HERO_TYPE]: dynamic(() => import('@/components/blocks/hero/hero')),
 	[SERVICES_TYPE]: dynamic(() => import('@/components/blocks/services/services')),
 	[PORTFOLIOS_TYPE]: dynamic(() => import('@/components/blocks/portfolios/protfolios')),

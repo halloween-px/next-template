@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
+import { Typography } from '@/components/ui/typography';
 
 interface SectionTitleProps {
 	isBadge?: boolean;
@@ -36,8 +37,16 @@ export const SectionTitle = ({
 			</Badge>
 		)}
 
-		{subtitle && <h2 className='text-4xl md:text-5xl font-bold mb-6 text-balance'>{subtitle}</h2>}
+		{subtitle && (
+			<Typography.Title level={2} align={align} className='mb-4'>
+				{subtitle}
+			</Typography.Title>
+		)}
 
-		{description && <p className='text-lg text-muted-foreground leading-relaxed'>{description}</p>}
+		{description && (
+			<Typography.Text align={align} color='muted' size='lg'>
+				{description}
+			</Typography.Text>
+		)}
 	</div>
 );

@@ -6,11 +6,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useState } from 'react';
 import { Container } from '@/components/shared/сontainer';
 import { SectionTitle } from '@/components/shared/sections/section-title';
+import { Typography } from '@/components/ui/typography';
 
 export default function Contacts() {
 	const [formData, setFormData] = useState({
@@ -22,7 +22,6 @@ export default function Contacts() {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		console.log('[v0] Form submitted:', formData);
-		// Handle form submission
 	};
 
 	return (
@@ -56,11 +55,13 @@ export default function Contacts() {
 
 					<div className='grid gap-8 lg:grid-cols-5 max-w-7xl mx-auto'>
 						<div className='lg:col-span-3'>
-							<Card className='border-2 border-border/50 bg-background/80 backdrop-blur-xl shadow-2xl hover:shadow-primary/20 transition-all duration-300'>
+							<Card className='border-2 border-border/50 bg-background/80 backdrop-blur-xl shadow-2xl py-1'>
 								<CardContent className='p-8 md:p-10'>
-									<div className='mb-8'>
-										<h3 className='text-2xl font-bold mb-2'>Отправьте нам сообщение</h3>
-										<p className='text-muted-foreground'>Мы ответим вам в кратчайшие сроки</p>
+									<div className='space-y-3'>
+										<Typography.Title level={4}>Отправить сообщение</Typography.Title>
+										<Typography.Text color='muted' className='mb-8'>
+											Заполните форму ниже, и мы свяжемся с вами в ближайшее время
+										</Typography.Text>
 									</div>
 
 									<form onSubmit={handleSubmit} className='space-y-6'>
@@ -92,6 +93,32 @@ export default function Contacts() {
 													required
 												/>
 											</div>
+											<div className='space-y-2'>
+												<label htmlFor='phone' className='block text-sm font-semibold'>
+													Телефон
+												</label>
+												<Input
+													id='phone'
+													type='tel'
+													placeholder='+7 (999) 123-45-67'
+													className='h-14 border-2 focus:border-primary transition-all bg-background/50 backdrop-blur-sm text-base'
+													value={formData.phone}
+													onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+												/>
+											</div>
+											<div className='space-y-2'>
+												<label htmlFor='subject' className='block text-sm font-semibold'>
+													Тема обращения <span className='text-destructive'>*</span>
+												</label>
+												<Input
+													id='subject'
+													placeholder='Разработка веб-приложения'
+													className='h-14 border-2 focus:border-primary transition-all bg-background/50 backdrop-blur-sm text-base'
+													value={formData.subject}
+													onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+													required
+												/>
+											</div>
 										</div>
 
 										<div className='space-y-2'>
@@ -101,8 +128,7 @@ export default function Contacts() {
 											<Textarea
 												id='message'
 												placeholder='Расскажите нам о вашем проекте, целях и требованиях...'
-												rows={8}
-												className='border-2 focus:border-primary transition-colors resize-none bg-background'
+												className='border-2 focus:border-primary transition-colors resize-none bg-background min-h-24'
 												value={formData.message}
 												onChange={(e) => setFormData({ ...formData, message: e.target.value })}
 												required
@@ -182,35 +208,6 @@ export default function Contacts() {
 											<p className='text-muted-foreground mb-1'>г. Москва, ул. Примерная, д. 123</p>
 											<p className='text-muted-foreground text-sm'>Бизнес-центр "Технопарк"</p>
 										</div>
-									</div>
-								</CardContent>
-							</Card>
-
-							<Card className='border-2 border-border/50 bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-xl overflow-hidden relative'>
-								<div className='absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--primary)/0.1),transparent_50%)]' />
-								<CardContent className='p-6 relative'>
-									<div className='flex items-start gap-3 mb-4'>
-										<Clock className='h-6 w-6 text-primary mt-1' />
-										<div>
-											<h3 className='font-bold text-lg mb-3'>Часы работы</h3>
-											<div className='space-y-2'>
-												<div className='flex items-center gap-2'>
-													<CheckCircle2 className='h-4 w-4 text-primary' />
-													<p className='text-sm text-muted-foreground'>
-														Понедельник - Пятница:{' '}
-														<span className='font-semibold text-foreground'>9:00 - 18:00</span>
-													</p>
-												</div>
-												<p className='text-sm text-muted-foreground pl-6'>
-													Суббота - Воскресенье: Выходной
-												</p>
-											</div>
-										</div>
-									</div>
-									<div className='mt-4 pt-4 border-t border-border/50'>
-										<p className='text-xs text-muted-foreground'>
-											⚡ Быстрый ответ в течение 24 часов
-										</p>
 									</div>
 								</CardContent>
 							</Card>
