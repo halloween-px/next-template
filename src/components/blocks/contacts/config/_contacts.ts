@@ -1,5 +1,5 @@
-export const CONTACTS_TYPE = 'contacts';
 export const CONTACTS_ID = 'section-contacts';
+export const CONTACTS_TYPE = 'contacts-v1';
 
 export const contactsConfig = {
 	id: CONTACTS_ID,

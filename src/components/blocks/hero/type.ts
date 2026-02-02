@@ -20,7 +20,7 @@ export type THeroContent = {
 
 export type THero = {
 	id: string;
-	type: 'hero';
+	type: string;
 	content: THeroContent;
 };
 

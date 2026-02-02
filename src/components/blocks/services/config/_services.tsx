@@ -1,7 +1,7 @@
 import { TServices } from '../types';
 
 export const SERVICES_ID = 'section-services';
-export const SERVICES_TYPE = 'services';
+export const SERVICES_TYPE = 'services-v1';
 
 export const servicesConfig: TServices = {
 	id: SERVICES_ID,

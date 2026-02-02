@@ -5,23 +5,25 @@ import { HERO_TYPE } from '@/components/blocks/hero/config/_hero';
 import { PORTFOLIOS_TYPE } from '@/components/blocks/portfolios/config/_portfolios';
 import { REVIEWS_TYPE } from '@/components/blocks/reviews/config/_reviews';
 import { SERVICES_TYPE } from '@/components/blocks/services/config/_services';
-import { TEAMS_TYPE } from '@/components/blocks/team/config/_team';
+import { TEAMS_TYPE } from '@/components/blocks/teams/config/_team';
 import { ABOUT_TYPES } from '@/templates/registry/_about';
+import { HEADER_TYPES } from '@/templates/registry/_header';
 import { Block } from '@/types/site';
 
 import dynamic from 'next/dynamic';
 import { ComponentType } from 'react';
 
 const BLOCKS_MAP: Record<string, ComponentType<any>> = {
-	[ABOUT_TYPES.V1]: dynamic(() => import('@/components/blocks/about/about')),
-	[ABOUT_TYPES.V2]: dynamic(() => import('@/components/blocks/about/variants/about-v2')),
+	[HEADER_TYPES.V1]: dynamic(() => import('@/components/blocks/header/v1')),
+	[ABOUT_TYPES.V1]: dynamic(() => import('@/components/blocks/about/v1')),
+	[ABOUT_TYPES.V2]: dynamic(() => import('@/components/blocks/about/v2')),
 
-	[HERO_TYPE]: dynamic(() => import('@/components/blocks/hero/hero')),
-	[SERVICES_TYPE]: dynamic(() => import('@/components/blocks/services/services')),
-	[PORTFOLIOS_TYPE]: dynamic(() => import('@/components/blocks/portfolios/protfolios')),
-	[TEAMS_TYPE]: dynamic(() => import('@/components/blocks/team/team')),
-	[REVIEWS_TYPE]: dynamic(() => import('@/components/blocks/reviews/reviews')),
-	[CONTACTS_TYPE]: dynamic(() => import('@/components/blocks/contacts/contacts')),
+	[HERO_TYPE]: dynamic(() => import('@/components/blocks/hero/v1')),
+	[SERVICES_TYPE]: dynamic(() => import('@/components/blocks/services/v1')),
+	[PORTFOLIOS_TYPE]: dynamic(() => import('@/components/blocks/portfolios/v1')),
+	[TEAMS_TYPE]: dynamic(() => import('@/components/blocks/teams/v1')),
+	[REVIEWS_TYPE]: dynamic(() => import('@/components/blocks/reviews/v1')),
+	[CONTACTS_TYPE]: dynamic(() => import('@/components/blocks/contacts/v1')),
 };
 
 const SectionRenderer = ({ section }: { section: Block }) => {

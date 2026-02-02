@@ -1,7 +1,7 @@
 import { TPortfolios } from '../types';
 
 export const PORTFOLIOS_ID = 'section-portfolios';
-export const PORTFOLIOS_TYPE = 'portfolios';
+export const PORTFOLIOS_TYPE = 'portfolios-v1';
 
 export const portfoliosConfig: TPortfolios = {
 	id: PORTFOLIOS_ID,

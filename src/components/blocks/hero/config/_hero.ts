@@ -1,7 +1,7 @@
 import { THero } from '../type';
 
 export const HERO_ID = 'section-hero';
-export const HERO_TYPE = 'hero';
+export const HERO_TYPE = 'hero-v1';
 
 export const heroConfig: THero = {
 	id: HERO_ID,

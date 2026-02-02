@@ -1,4 +1,4 @@
-import { Container } from '@/components/shared/сontainer';
+import { Container } from '@/components/shared/container';
 import {
 	Breadcrumb,
 	BreadcrumbItem,

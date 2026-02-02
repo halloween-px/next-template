@@ -3,7 +3,7 @@ import { THeroContent } from '@/components/blocks/hero/type';
 import { TPortfoliosContent } from '@/components/blocks/portfolios/types';
 import { TReviewsContent } from '@/components/blocks/reviews/types';
 import { TServicesContent } from '@/components/blocks/services/types';
-import { TTeamsContent } from '@/components/blocks/team/types';
+import { TTeamsContent } from '@/components/blocks/teams/types';
 
 export type ColorScheme = 'light' | 'dark';
 

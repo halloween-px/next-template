@@ -1,7 +1,7 @@
 import { TReviews } from '../types';
 
 export const REVIEWS_ID = 'section-reviews';
-export const REVIEWS_TYPE = 'reviews';
+export const REVIEWS_TYPE = 'reviews-v1';
 
 export const reviewsConfig: TReviews = {
 	id: REVIEWS_ID,

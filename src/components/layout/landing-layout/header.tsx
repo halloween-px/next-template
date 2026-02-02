@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Container } from '@/components/shared/сontainer';
+import { Container } from '@/components/shared/container';
 import { useUserContext } from '../../providers/user-provider';
 import { useMutation } from '@/hooks/useMutation';
 import { API_ROUTES } from '@/config/api-routes';

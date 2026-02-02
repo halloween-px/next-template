@@ -1,7 +1,7 @@
 import { heroConfig } from '@/components/blocks/hero/config/_hero';
 import { servicesConfig } from '@/components/blocks/services/config/_services';
 import { portfoliosConfig } from '@/components/blocks/portfolios/config/_portfolios';
-import { teamsConfig } from '@/components/blocks/team/config/_team';
+import { teamsConfig } from '@/components/blocks/teams/config/_team';
 import { reviewsConfig } from '@/components/blocks/reviews/config/_reviews';
 import { contactsConfig } from '@/components/blocks/contacts/config/_contacts';
 import { defaultAboutConfig } from './registry/_about';

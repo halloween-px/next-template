@@ -1,4 +1,4 @@
-import { landingTemplate } from '@/templates/_landing-template';
+import { siteConfig } from '@/templates/site-template';
 import { Block } from '@/types/site';
 import { create } from 'zustand';
 
@@ -15,7 +15,7 @@ type TUseBuilderStore = {
 };
 
 export const useBuilderStore = create<TUseBuilderStore>((set) => ({
-	sections: landingTemplate.pages[0].sections || null,
+	sections: siteConfig.pages[0].sections || null,
 	isLoading: false,
 
 	setSection: (sections: Array<Block>) => set({ sections }),

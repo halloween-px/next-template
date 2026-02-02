@@ -1,4 +1,4 @@
-import { TemplateLayout } from '@/components/layout/tepmplate-layout/template-layout';
+import { TemplateLayout } from '@/components/layout/template-layout/template-layout';
 import { PropsWithChildren } from 'react';
 
 export const metadata = {

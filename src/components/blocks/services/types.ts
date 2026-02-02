@@ -17,6 +17,6 @@ export type TServicesContent = {
 
 export type TServices = {
 	id: string;
-	type: 'services';
+	type: string;
 	content: TServicesContent;
 };
