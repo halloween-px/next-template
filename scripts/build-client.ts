@@ -169,7 +169,7 @@ async function generateRenderer() {
 	const imports = USED_BLOCKS.map((b) => {
 		const [cat, v] = b.split('-');
 		const compName = `${cat.charAt(0).toUpperCase() + cat.slice(1)}${v.toUpperCase()}`;
-		return `import ${compName} from '@/components/blocks/${cat}/${compName}';`;
+		return `import ${compName} from '@/kit/components/blocks/${cat}/${compName}';`;
 	}).join('\n');
 
 	// 2. Создаем карту компонентов (упрощенную, без dynamic)
@@ -213,7 +213,7 @@ async function generatePage() {
 	// Страница теперь супер-простая, она просто читает JSON
 	const content = `
 import content from '@/data/content.json';
-import { SectionRenderer } from '@/components/SectionRenderer';
+import { SectionRenderer } from '@/kit/components/SectionRenderer';
 
 export const metadata = {
   title: content.meta.title,

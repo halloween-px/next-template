@@ -1,5 +1,5 @@
-import { aboutConfig } from '@/components/blocks/about/config/_about';
-import { TAbout } from '@/components/blocks/about/type';
+import { aboutConfig } from '@/kit/components/blocks/about/config/_about';
+import { TAbout } from '@/kit/components/blocks/about/type';
 
 export const ABOUT_TYPES = {
 	V1: 'about-v1',

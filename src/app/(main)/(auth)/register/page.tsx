@@ -1,5 +1,5 @@
-import { RegisterForm } from '@/components/features/auth/register-form';
-import { Container } from '@/components/shared/container';
+import { Container } from '@/kit/components/shared/container';
+import { RegisterForm } from '@/kit/features/auth/register-form';
 import Image from 'next/image';
 
 const Register = () => {

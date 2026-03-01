@@ -1,9 +1,9 @@
-import { TAboutContent } from '@/components/blocks/about/type';
-import { THeroContent } from '@/components/blocks/hero/type';
-import { TPortfoliosContent } from '@/components/blocks/portfolios/types';
-import { TReviewsContent } from '@/components/blocks/reviews/types';
-import { TServicesContent } from '@/components/blocks/services/types';
-import { TTeamsContent } from '@/components/blocks/teams/types';
+import { TAboutContent } from '@/kit/components/blocks/about/type';
+import { THeroContent } from '@/kit/components/blocks/hero/type';
+import { TPortfoliosContent } from '@/kit/components/blocks/portfolios/types';
+import { TReviewsContent } from '@/kit/components/blocks/reviews/types';
+import { TServicesContent } from '@/kit/components/blocks/services/types';
+import { TTeamsContent } from '@/kit/components/blocks/teams/types';
 
 export type ColorScheme = 'light' | 'dark';
 
@@ -96,16 +96,31 @@ export interface PageConfig {
 	sections: Block[]; // Теперь разделы строго типизированы
 }
 
-export type Block =
-	| { id: string; type: string; content: THeroContent }
-	| { id: string; type: string; content: TAboutContent }
-	| { id: string; type: string; content: TServicesContent }
-	| { id: string; type: string; content: TPortfoliosContent }
-	| { id: string; type: string; content: TTeamsContent }
-	| { id: string; type: string; content: TReviewsContent }
-	| { id: string; type: string; content: any };
+export type BlockContentByType = {
+	hero: THeroContent;
+	about: TAboutContent;
+	services: TServicesContent;
+	portfolios: TPortfoliosContent;
+	teams: TTeamsContent;
+	reviews: TReviewsContent;
+	custom: any;
+};
 
-export type BlockType = Block['type'];
+export type BaseBlockType = keyof BlockContentByType;
+export type BlockType = `${BaseBlockType}-${string}`;
+export type Block =
+	| {
+			[K in BaseBlockType]: {
+				id: string;
+				type: `${K}-${string}`;
+				content: BlockContentByType[K];
+			};
+	  }[BaseBlockType]
+	| {
+			id: string;
+			type: string;
+			content: any;
+	  };
 
 export interface ServicesContent {
 	title: string;

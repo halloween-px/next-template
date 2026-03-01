@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
-import { Toaster } from '@/components/ui/sonner';
-import { ThemeProvider } from '@/components/providers/theme-provider';
+import { Toaster } from '@/kit/components/ui/sonner';
+import { ThemeProvider } from '@/kit/components/providers/theme-provider';
 import { getSession } from '@/services/auth';
-import { UserProvider } from '@/components/providers/user-provider';
+import { UserProvider } from '@/kit/components/providers/user-provider';
 import { ReactNode } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });

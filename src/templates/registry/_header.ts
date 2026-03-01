@@ -1,4 +1,4 @@
-import { headerConfig } from '@/components/blocks/header/config/_header';
+import { headerConfig } from '@/kit/components/blocks/header/config/_header';
 
 export const HEADER_TYPES = {
 	V1: 'header-v1',

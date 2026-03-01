@@ -1,5 +1,6 @@
-import { LoginForm } from '@/components/features/auth/login-form';
-import { Container } from '@/components/shared/container';
+import { Container } from '@/kit/components/shared/container';
+import { LoginForm } from '@/kit/features/auth/login-form';
+
 import Image from 'next/image';
 
 const Login = () => {

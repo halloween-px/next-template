@@ -1,7 +1,5 @@
-import { Header } from '@/components/layout/landing-layout/header';
-import { HeroSection } from '@/components/marketing/hero-section';
-import { ServicesSection } from '@/components/marketing/services-section';
-import { Footer } from '@/components/layout/landing-layout/footer';
+import { ServicesSection } from '@/kit/components/marketing/sections/services-section';
+import { HeroSection } from '@/kit/components/marketing/sections/hero-section';
 
 export default function Home() {
 	return (

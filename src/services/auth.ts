@@ -3,7 +3,7 @@ import User from '@/lib/db/models/User';
 import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
 import { generateToken, verifyToken } from './token';
-import { TUser } from '@/stores/slices/auth-store';
+import { TUser } from '@/kit/stores/slices/auth-store';
 
 export const keyToken = 'auth-token';
 
