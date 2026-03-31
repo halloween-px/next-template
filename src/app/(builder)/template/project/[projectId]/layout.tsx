@@ -1,8 +1,8 @@
 import { getSiteProjectForUser } from '@/lib/db/site-project-queries';
 import { getSession } from '@/services/auth';
 import { ProjectPreviewActions } from '@/widgets/site-project-preview/ui/project-preview-actions';
-import { SiteProjectPreviewShell } from '@/widgets/site-project-preview/ui/site-project-preview-shell';
 import { notFound, redirect } from 'next/navigation';
+import { ProjectPreviewScene } from './ui/project-preview-scene';
 
 type Props = {
 	children: React.ReactNode;
@@ -22,9 +22,9 @@ export default async function ProjectPreviewLayout({ children, params }: Props) 
 	}
 
 	return (
-		<SiteProjectPreviewShell config={project.config} projectId={projectId}>
+		<ProjectPreviewScene config={project.config} projectId={projectId}>
 			{children}
 			<ProjectPreviewActions />
-		</SiteProjectPreviewShell>
+		</ProjectPreviewScene>
 	);
 }

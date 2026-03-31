@@ -1,3 +1,4 @@
+import { MainLayout } from '@/kit/components/layouts/landing-layout/main-layout';
 import { PropsWithChildren } from 'react';
 
 export const metadata = {
