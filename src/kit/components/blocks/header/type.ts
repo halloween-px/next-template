@@ -13,7 +13,7 @@ export type ButtonsHeader = {
 
 export type THeaderProps = {
 	linkToMain?: string;
-	navigationData: NavGroup[];
+	navigationData?: NavGroup[];
 	sticky?: boolean;
 	navigationVariant?: NavigationVariant;
 	showPhone?: boolean;

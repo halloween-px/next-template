@@ -21,10 +21,19 @@ export const Link = ({
 	hideOnCurrent = true,
 	...props
 }: LinkProps) => {
-	const pathname = usePathname();
-	const isBuilder = pathname?.startsWith('/template');
+	const pathname = usePathname() ?? '';
+	const projectMatch = pathname.match(/^(\/template\/project\/[^/]+)/);
+	const projectBase = projectMatch?.[1] ?? null;
 
-	const cleanPathname = isBuilder ? pathname.replace('/template', '') || '/' : pathname;
+	const isBuilder = pathname.startsWith('/template');
+
+	let cleanPathname = pathname;
+	if (projectBase) {
+		cleanPathname = pathname.slice(projectBase.length) || '/';
+	} else if (isBuilder) {
+		cleanPathname = pathname.replace('/template', '') || '/';
+	}
+
 	const strHref = href.toString();
 	const isCurrentPage = cleanPathname === strHref;
 
@@ -32,7 +41,11 @@ export const Link = ({
 
 	let finalHref = href;
 	if (isBuilder && strHref.startsWith('/')) {
-		finalHref = `/template${strHref}`;
+		if (projectBase && strHref.startsWith(projectBase)) {
+			finalHref = strHref;
+		} else {
+			finalHref = projectBase ? `${projectBase}${strHref}` : `/template${strHref}`;
+		}
 	}
 
 	if (isCurrentPage && hideOnCurrent && isBuilder) {

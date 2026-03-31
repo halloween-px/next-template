@@ -4,6 +4,7 @@ import { portfoliosConfig } from '@/kit/components/blocks/portfolios/config/_por
 import { teamsConfig } from '@/kit/components/blocks/teams/config/_team';
 import { reviewsConfig } from '@/kit/components/blocks/reviews/config/_reviews';
 import { contactsConfig } from '@/kit/components/blocks/contacts/config/_contacts';
+import { footerConfig } from '@/kit/components/blocks/footer/config/_footer';
 import { defaultAboutConfig } from './registry/_about';
 import { aboutPageConfig } from './pages';
 
@@ -41,46 +42,5 @@ export const corporateTemplate = {
 		},
 		aboutPageConfig,
 	],
-	footer: {
-		companyInfo: {
-			name: 'TechCompany',
-			description: 'Создаем инновационные цифровые решения для вашего бизнеса',
-		},
-		columns: [
-			{
-				title: 'Компания',
-				links: [
-					{ label: 'О нас', href: '#about' },
-					{ label: 'Команда', href: '#team' },
-					{ label: 'Карьера', href: '#' },
-					{ label: 'Блог', href: '#' },
-				],
-			},
-			{
-				title: 'Услуги',
-				links: [
-					{ label: 'Веб-разработка', href: '#services' },
-					{ label: 'Мобильные приложения', href: '#services' },
-					{ label: 'UI/UX дизайн', href: '#services' },
-					{ label: 'Консалтинг', href: '#services' },
-				],
-			},
-			{
-				title: 'Поддержка',
-				links: [
-					{ label: 'Контакты', href: '#contact' },
-					{ label: 'FAQ', href: '#' },
-					{ label: 'Политика конфиденциальности', href: '#' },
-					{ label: 'Условия использования', href: '#' },
-				],
-			},
-		],
-		social: [
-			{ platform: 'github', url: '#' },
-			{ platform: 'twitter', url: '#' },
-			{ platform: 'linkedin', url: '#' },
-			{ platform: 'facebook', url: '#' },
-		],
-		copyright: '© 2025 TechCompany. Все права защищены.',
-	},
+	footer: footerConfig,
 };

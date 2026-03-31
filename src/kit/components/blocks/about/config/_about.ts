@@ -1,3 +1,5 @@
+import { infoblocksConfig } from '@/kit/components/blocks/infoblocks/config/_infoblocks';
+import { statsConfig } from '@/kit/components/blocks/stats/config/_stats';
 import { TAbout } from '../type';
 
 export const ABOUT_ID = 'section-about';
@@ -9,39 +11,11 @@ const aboutContent = {
 		'Наша команда специализируется на разработке современных веб-приложений и мобильных решений. Мы объединяем креативность, технологический опыт и бизнес-понимание для создания продуктов, которые действительно работают.',
 	mission:
 		'Мы — команда профессионалов, которая превращает идеи в реальность. Наша миссия — создавать инновационные решения, которые помогают бизнесу расти и развиваться в цифровую эпоху.',
-	stats: [
-		{ value: '500+', label: 'Проектов' },
-		{ value: '50+', label: 'Специалистов' },
-		{ value: '15+', label: 'Лет опыта' },
-		{ value: '98%', label: 'Довольных клиентов' },
+	parts: [
+		{ type: 'stats-v1' as const, content: statsConfig.content },
+		{ type: 'infoblocks-v1' as const, content: infoblocksConfig.content },
 	],
-	links: [{ label: 'string', href: '/about' }],
-	infoblocks: [
-		{
-			icon: 'Lightbulb',
-			title: 'Инновации',
-			description:
-				'Мы постоянно развиваемся и внедряем передовые технологии для создания лучших решений',
-		},
-		{
-			icon: 'Users',
-			title: 'Команда',
-			description:
-				'Наша сила в людях - профессионалах своего дела, которые работают как единое целое',
-		},
-		{
-			icon: 'Target',
-			title: 'Результат',
-			description:
-				'Мы нацелены на достижение конкретных результатов и превосходим ожидания клиентов',
-		},
-		{
-			icon: 'Award',
-			title: 'Качество',
-			description:
-				'Каждый проект выполняется с максимальным вниманием к деталям и высоким стандартам',
-		},
-	],
+	links: [{ label: 'Подробнее', href: '/about' }],
 	image: 'modern-office-collaboration.png',
 };
 

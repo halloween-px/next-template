@@ -1,3 +1,5 @@
+'use client';
+
 import { NavigationMenuLink } from '@/kit/components/ui/navigation-menu';
 import Link from 'next/link';
 import { NavItem } from './types';

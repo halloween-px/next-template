@@ -14,9 +14,20 @@ const __dirname = path.dirname(__filename);
 const ORDER_CONFIG = siteConfig;
 const PAGE = ORDER_CONFIG.pages[0];
 const SECTIONS = PAGE.sections;
+
+// Дополнительно добавляем header / footer (не в sections, но их тоже нужно скопировать)
+const HEADER_BLOCK_TYPE = ORDER_CONFIG.header?.type;
+const FOOTER_BLOCK_TYPE = ORDER_CONFIG.footer?.type;
+
 // Вычисляем список уникальных блоков для копирования файлов
 // Set уберет дубликаты, если у нас 2 одинаковых блока
-const USED_BLOCKS = [...new Set(SECTIONS.map((s) => s.type))];
+const USED_BLOCKS = [
+	...new Set([
+		...SECTIONS.map((s) => s.type),
+		...(HEADER_BLOCK_TYPE ? [HEADER_BLOCK_TYPE] : []),
+		...(FOOTER_BLOCK_TYPE ? [FOOTER_BLOCK_TYPE] : []),
+	]),
+];
 
 // ПУТИ
 const ROOT_DIR = path.resolve(__dirname, '..');
@@ -41,13 +52,13 @@ async function build() {
 		// 3. UI & SHARED (Копируем как раньше)
 		console.log(chalk.yellow('🎨 Копируем UI и Shared...'));
 		await fs.copy(
-			path.join(SOURCE_DIR, 'components/ui'),
+			path.join(SOURCE_DIR, 'kit/components/ui'),
 			path.join(OUTPUT_DIR, 'src/components/ui'),
 			{
 				filter: (src: any) => !src.includes('link.tsx'),
 			}
 		);
-		const sharedDir = path.join(SOURCE_DIR, 'components/shared');
+		const sharedDir = path.join(SOURCE_DIR, 'kit/components/shared');
 		if (await fs.pathExists(sharedDir)) {
 			await fs.copy(sharedDir, path.join(OUTPUT_DIR, 'src/components/shared'));
 		}
@@ -74,7 +85,7 @@ async function build() {
 		console.log(chalk.yellow('🧱 Копируем блоки...'));
 		for (const blockType of USED_BLOCKS) {
 			const [category, variant] = blockType.split('-'); // 'about', 'v1'
-			const srcBlockDir = path.join(SOURCE_DIR, 'components/blocks', category);
+			const srcBlockDir = path.join(SOURCE_DIR, 'kit/components/blocks', category);
 			const destBlockDir = path.join(OUTPUT_DIR, 'src/components/blocks', category);
 
 			if (!(await fs.pathExists(srcBlockDir))) continue;
@@ -97,14 +108,37 @@ async function build() {
 			if (await fs.pathExists(oldFile)) await fs.move(oldFile, newFile);
 		}
 
+		// Данные компании — один файл в скачанном проекте (рядом с тем же путём, что в конструкторе)
+		console.log(chalk.yellow('📋 Копируем src/templates/company.ts...'));
+		await fs.ensureDir(path.join(OUTPUT_DIR, 'src/templates'));
+		await fs.copy(
+			path.join(SOURCE_DIR, 'templates/company.ts'),
+			path.join(OUTPUT_DIR, 'src/templates/company.ts'),
+		);
+
+		// 4.1 REWRITE IMPORTS (kit -> components)
+		console.log(chalk.yellow('🧩 Переписываем импорты (@/kit -> @/components)...'));
+		await rewriteImportsInOutput();
+
 		// 5. ГЕНЕРАЦИЯ CONTENT.JSON
 		console.log(chalk.yellow('💾 Сохраняем контент...'));
 		await fs.ensureDir(path.join(OUTPUT_DIR, 'src/data'));
 
-		// Сохраняем полную структуру страницы
+		// Сохраняем полную структуру страницы + глобальные данные сайта
 		const contentData = {
-			meta: PAGE.meta,
-			sections: SECTIONS,
+			site: {
+				id: ORDER_CONFIG.id,
+				siteName: ORDER_CONFIG.siteName,
+				theme: ORDER_CONFIG.theme,
+				companyInfo: ORDER_CONFIG.companyInfo,
+				navigation: ORDER_CONFIG.navigation,
+			},
+			header: ORDER_CONFIG.header,
+			footer: ORDER_CONFIG.footer,
+			page: {
+				meta: PAGE.meta,
+				sections: SECTIONS,
+			},
 		};
 
 		await fs.writeJson(path.join(OUTPUT_DIR, 'src/data/content.json'), contentData, { spaces: 2 });
@@ -169,7 +203,7 @@ async function generateRenderer() {
 	const imports = USED_BLOCKS.map((b) => {
 		const [cat, v] = b.split('-');
 		const compName = `${cat.charAt(0).toUpperCase() + cat.slice(1)}${v.toUpperCase()}`;
-		return `import ${compName} from '@/kit/components/blocks/${cat}/${compName}';`;
+		return `import ${compName} from '@/components/blocks/${cat}/${compName}';`;
 	}).join('\n');
 
 	// 2. Создаем карту компонентов (упрощенную, без dynamic)
@@ -185,6 +219,7 @@ async function generateRenderer() {
 'use client';
 
 import { ComponentType } from 'react';
+import content from '@/data/content.json';
 ${imports}
 
 // Карта компонентов (Сгенерирована автоматически)
@@ -193,7 +228,6 @@ const BLOCKS_MAP: Record<string, ComponentType<any>> = {
 };
 
 export const SectionRenderer = ({ section }: { section: any }) => {
-  // section.type это 'about/v1'
   const Component = BLOCKS_MAP[section.type];
 
   if (!Component) {
@@ -201,8 +235,15 @@ export const SectionRenderer = ({ section }: { section: any }) => {
     return null;
   }
 
-  // Передаем контент как пропсы
-  return <Component {...section.content} />;
+  const siteNav = content.site?.navigation as { links?: unknown } | undefined;
+  const props =
+    typeof section.type === 'string' &&
+    section.type.startsWith('header-') &&
+    siteNav?.links
+      ? { ...section.content, navigationData: siteNav.links }
+      : section.content;
+
+  return <Component {...props} />;
 };
 `;
 
@@ -213,25 +254,70 @@ async function generatePage() {
 	// Страница теперь супер-простая, она просто читает JSON
 	const content = `
 import content from '@/data/content.json';
-import { SectionRenderer } from '@/kit/components/SectionRenderer';
+import { SectionRenderer } from '@/components/SectionRenderer';
 
 export const metadata = {
-  title: content.meta.title,
-  description: content.meta.description,
+  title: content.page.meta.title,
+  description: content.page.meta.description,
 };
 
 export default function Home() {
   return (
     <main>
-      {content.sections.map((section, index) => (
-        // Используем index как ключ, или добавь id в json
+      {/* Header (не в sections) */}
+      {content.header ? <SectionRenderer section={content.header} /> : null}
+
+      {/* Sections */}
+      {content.page.sections.map((section, index) => (
         <SectionRenderer key={index} section={section} />
       ))}
+
+      {content.footer ? <SectionRenderer section={content.footer} /> : null}
     </main>
   );
 }
 `;
 	await fs.writeFile(path.join(OUTPUT_DIR, 'src/app/page.tsx'), content);
+}
+
+async function rewriteImportsInOutput() {
+	const srcRoot = path.join(OUTPUT_DIR, 'src');
+	if (!(await fs.pathExists(srcRoot))) return;
+
+	const exts = new Set(['.ts', '.tsx', '.js', '.jsx']);
+
+	const walk = async (dir: string) => {
+		const entries = await fs.readdir(dir, { withFileTypes: true });
+		for (const entry of entries) {
+			const fullPath = path.join(dir, entry.name);
+			if (entry.isDirectory()) {
+				await walk(fullPath);
+				continue;
+			}
+
+			const ext = path.extname(entry.name);
+			if (!exts.has(ext)) continue;
+
+			let code = await fs.readFile(fullPath, 'utf8');
+			const original = code;
+
+			// UI
+			code = code.replaceAll('@/kit/components/ui/', '@/components/ui/');
+			// Shared
+			code = code.replaceAll('@/kit/components/shared/', '@/components/shared/');
+			// Blocks (sometimes blocks import other blocks)
+			code = code.replaceAll('@/kit/components/blocks/', '@/components/blocks/');
+
+			// Fallback: any remaining `@/kit/components/...` to `@/components/...`
+			code = code.replaceAll('@/kit/components/', '@/components/');
+
+			if (code !== original) {
+				await fs.writeFile(fullPath, code, 'utf8');
+			}
+		}
+	};
+
+	await walk(srcRoot);
 }
 
 build();

@@ -1,3 +1,5 @@
+import { getContactsBlockInfo } from '@/templates/company';
+
 export const CONTACTS_ID = 'section-contacts';
 export const CONTACTS_TYPE = 'contacts-v1';
 
@@ -8,11 +10,7 @@ export const contactsConfig = {
 		title: 'Свяжитесь с нами',
 		subtitle: 'Готовы начать ваш проект?',
 		description: 'Заполните форму ниже, и мы свяжемся с вами в ближайшее время',
-		contactInfo: [
-			{ icon: 'Mail', label: 'Email', value: 'info@techcompany.com' },
-			{ icon: 'Phone', label: 'Телефон', value: '+7 (999) 123-45-67' },
-			{ icon: 'MapPin', label: 'Адрес', value: 'Москва, ул. Примерная, д. 1' },
-		],
+		contactInfo: getContactsBlockInfo(),
 		formFields: [
 			{
 				name: 'name',

@@ -1,36 +1,173 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Ты работаешь с проектом visual builder / site template generator на Next.js.
 
-## Getting Started
+Суть проекта:
+Это приложение-конструктор сайтов, где пользователь может собирать сайт из готовых блоков, менять варианты блоков, редактировать контент, тему, структуру страниц, а потом экспортировать готовый проект как отдельное Next.js приложение.
 
-First, run the development server:
+Главная идея:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- есть шаблон сайта
+- сайт состоит из страниц
+- страницы состоят из секций / блоков
+- каждый блок имеет type, variant, config и content
+- блоки можно переставлять, заменять на другой вариант, удалять, добавлять
+- потом все это рендерится динамически
+- сайт можно собрать как отдельный Next.js проект (`npm run build-project` → `output/<siteName>/`)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Стек:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js (App Router)
+- React
+- TypeScript
+- Zustand для client-side state
+- Tailwind CSS
+- shadcn/ui
+- архитектура ближе к feature-sliced / modular, но без фанатизма
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Текущая архитектура проекта:
 
-## Learn More
+- src/app/(builder)/template/[[...slug]] — превью страницы шаблона по siteConfig (статический конфиг)
+- src/app/(builder)/builder — режим билдера: секции из Zustand + тот же рендерер
+- src/core/renderer.tsx — рендеринг секций по конфигу (dynamic-импорты блоков)
+- src/templates/site-template.ts — основной siteConfig
+- src/templates/registry — реестр блоков и их вариантов
+- src/kit/components/blocks/\* — сами блоки (presentational)
+- src/kit/components/shared/\* — общие композиционные ui-компоненты
+- src/kit/components/shared/sheets/common-sheet.tsx — общая sheet / sidebar обертка
+- src/stores/slices/site-store.ts — zustand store для секций и редактирования
+- src/types/site.ts — типы сайта, блоков, секций и конфигов
 
-To learn more about Next.js, take a look at the following resources:
+Alias в TypeScript:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `@/*` → `src/*`
+- `@/kit/*` → `src/kit/*` (UI-kit, блоки, общие компоненты)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Как устроены блоки:
+У каждого блока есть:
 
-## Deploy on Vercel
+- базовый тип, например hero, about, services, portfolio, contacts, footer
+- конкретный variant/type, например hero-v1, hero-v2, about-v1
+- конфиг для данных блока
+- React-компонент для конкретной версии
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Пример:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- about-v1
+- about-v2
+
+Обычно структура блока такая:
+
+- src/kit/components/blocks/about/v1.tsx
+- src/kit/components/blocks/about/v2.tsx
+- src/kit/components/blocks/about/type.ts
+- src/kit/components/blocks/about/config/_about.ts
+
+Принципы блоков:
+
+- блоки должны быть dumb/presentational
+- блок не должен тянуть бизнес-логику редактора внутрь
+- блок получает данные через props
+- блок не должен знать о Zustand, builder UI и внутренностях редактора
+- все редакторские механики живут снаружи
+
+Как работает рендер:
+
+- сайт описывается через siteConfig
+- в siteConfig есть pages[]
+- у страницы есть sections[]
+- у секции есть id, type, props/content/config
+- renderer.tsx по type сопоставляет секцию с компонентом (карта в `renderer.tsx`, константы типов — в `templates/registry` и config блоков)
+
+Примерное направление типов:
+
+- BlockType = `${BaseBlockType}-${string}`
+- есть union типов блоков
+- есть BlockContentByType
+- есть registry, который сопоставляет type -> component + default config + metadata
+
+Что важно по редактору:
+Это не просто сайт, а builder/editor.
+Нужен editor experience:
+
+- слева sidebar / sheet / drawer с настройками
+- активный блок может определяться по scroll position
+- когда открыт sidebar, основной контент слегка уменьшается по масштабу и сдвигается
+- при редактировании блок может “pin”-иться, чтобы не терять фокус
+- нужен удобный UX для переключения вариантов блока и изменения контента
+
+Что должен уметь store:
+
+- хранить sections
+- менять тип блока
+- менять данные блока
+- двигать блоки
+- добавлять блоки
+- удалять блоки
+
+Важный принцип по данным:
+Контент и структура должны быть максимально конфигурируемыми.
+Не хардкодить тексты внутри JSX, если это контент блока.
+Контент должен жить в config/siteConfig.
+
+Header и глобальные данные:
+Есть идея глобальных данных уровня сайта:
+
+- navigation
+- company info
+- socials
+- phone
+- address
+  Чтобы не дублировать эти данные между header/footer/contact block.
+
+Нужно стремиться к тому, чтобы:
+
+- header брал navigation из общего siteConfig
+- footer тоже мог брать общие данные
+- общая информация компании была централизована
+
+Про export/build:
+Скрипт `npm run build-project` (`scripts/build-client.ts`) собирает отдельный Next.js проект: копирует `skeleton/` в `output/<siteName>/`, подмешивает данные и нужные блоки из kit. Цель — чтобы экспорт не тянул внутренний builder-слой и жил своими путями.
+
+При этом:
+
+- импорты в исходном репозитории указывают на `@/kit/...` там, где это код kit
+- в сгенерированном проекте пути нормализуются под структуру экспорта (например `@/components/...` в выходной папке)
+- блоки должны оставаться достаточно независимыми, чтобы их можно было переносить в экспорт
+
+Правила работы с кодом:
+
+1. Не ломай текущую архитектуру без необходимости.
+2. Сохраняй модульность.
+3. Не смешивай UI блока и editor logic.
+4. Если предлагаешь новую структуру — она должна быть практичной, не “ради идеальной архитектуры”.
+5. Код должен быть типизированным и понятным.
+6. Предпочтительны маленькие, переиспользуемые решения.
+7. Если делаешь новый блок или вариант блока — соблюдай существующий паттерн.
+8. Если меняешь store или типы — проверь, как это повлияет на renderer, registry и siteConfig.
+9. Tailwind + shadcn/ui использовать нативно, без лишних abstraction-слоев.
+10. Если пишешь код, ориентируйся на production-like качество.
+
+Как нужно отвечать:
+
+- сначала коротко объясни идею решения
+- потом покажи конкретный код
+- не давай слишком абстрактные советы
+- учитывай текущую структуру проекта
+- если видишь, что можно сделать проще и чище — предлагай
+- если нужно, предлагай точечный рефакторинг без переписывания всего проекта
+
+Когда работаешь с фичами:
+Всегда учитывай, что это builder для сайтов, а не просто страница на Next.js.
+Любое решение должно отвечать на вопрос:
+
+- это удобно для рендера?
+- это удобно для редактирования?
+- это удобно для экспорта?
+- это не ломает независимость блоков?
+
+Если я прошу написать код:
+
+- пиши код сразу под мой стек
+- используй TypeScript
+- используй alias `@/...` для `src/` и `@/kit/...` для kit (блоки и общие компоненты — под `src/kit/`)
+- не придумывай лишние библиотеки
+- соблюдай текущий стиль проекта

@@ -1,3 +1,4 @@
+import { getSiteCompanyInfo } from './company';
 import { heroConfig } from '@/kit/components/blocks/hero/config/_hero';
 import { servicesConfig } from '@/kit/components/blocks/services/config/_services';
 import { portfoliosConfig } from '@/kit/components/blocks/portfolios/config/_portfolios';
@@ -5,6 +6,7 @@ import { teamsConfig } from '@/kit/components/blocks/teams/config/_team';
 import { reviewsConfig } from '@/kit/components/blocks/reviews/config/_reviews';
 import { contactsConfig } from '@/kit/components/blocks/contacts/config/_contacts';
 import { defaultAboutConfig } from './registry';
+import { footerConfig } from '@/kit/components/blocks/footer/config/_footer';
 import { headerConfig } from '@/kit/components/blocks/header/config/_header';
 
 export const siteConfig = {
@@ -21,26 +23,7 @@ export const siteConfig = {
 		},
 	},
 
-	companyInfo: {
-		name: 'TechCompany',
-		description: 'Создаем инновационные цифровые решения',
-		logo: {
-			text: 'TechCompany',
-			image: '/logo.svg',
-			link: '',
-		},
-		contacts: {
-			phone: '+7 999 123-45-67',
-			email: 'info@techcompany.ru',
-			address: 'Москва, ул. Примерная, 1',
-		},
-		social: {
-			github: '#',
-			twitter: '#',
-			linkedin: '#',
-			facebook: '#',
-		},
-	},
+	companyInfo: getSiteCompanyInfo(),
 
 	navigation: {
 		links: [
@@ -134,46 +117,5 @@ export const siteConfig = {
 		},
 	],
 
-	footer: {
-		companyInfo: {
-			name: 'TechCompany',
-			description: 'Создаем инновационные цифровые решения для вашего бизнеса',
-		},
-		columns: [
-			{
-				title: 'Компания',
-				links: [
-					{ label: 'О нас', href: '#about' },
-					{ label: 'Команда', href: '#team' },
-					{ label: 'Карьера', href: '#' },
-					{ label: 'Блог', href: '#' },
-				],
-			},
-			{
-				title: 'Услуги',
-				links: [
-					{ label: 'Веб-разработка', href: '#services' },
-					{ label: 'Мобильные приложения', href: '#services' },
-					{ label: 'UI/UX дизайн', href: '#services' },
-					{ label: 'Консалтинг', href: '#services' },
-				],
-			},
-			{
-				title: 'Поддержка',
-				links: [
-					{ label: 'Контакты', href: '#contact' },
-					{ label: 'FAQ', href: '#' },
-					{ label: 'Политика конфиденциальности', href: '#' },
-					{ label: 'Условия использования', href: '#' },
-				],
-			},
-		],
-		social: [
-			{ platform: 'github', url: '#' },
-			{ platform: 'twitter', url: '#' },
-			{ platform: 'linkedin', url: '#' },
-			{ platform: 'facebook', url: '#' },
-		],
-		copyright: '© 2025 TechCompany. Все права защищены.',
-	},
+	footer: footerConfig,
 };

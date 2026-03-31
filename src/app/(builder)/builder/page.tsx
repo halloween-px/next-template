@@ -1,16 +1,21 @@
-'use client';
+import { ROUTES } from '@/config/routes';
+import { redirect } from 'next/navigation';
 
-import { useBuilderStore } from '@/stores/slices/site-store';
-import SectionRenderer from '@/core/renderer';
+type Props = {
+	searchParams: Promise<{ projectId?: string; slug?: string }>;
+};
 
-export default function TemplateBuilderPage() {
-	const sections = useBuilderStore((s) => s.sections);
+function normalizeSlug(value?: string) {
+	if (!value || value === '/') return '';
+	return value.startsWith('/') ? value : `/${value}`;
+}
 
-	return (
-		<>
-			{sections?.map((section) => (
-				<SectionRenderer key={section.id} section={section} />
-			))}
-		</>
-	);
+export default async function TemplateBuilderPage({ searchParams }: Props) {
+	const { projectId, slug } = await searchParams;
+
+	if (!projectId) {
+		redirect(ROUTES.template);
+	}
+
+	redirect(`${ROUTES.templateProject(projectId)}${normalizeSlug(slug)}`);
 }

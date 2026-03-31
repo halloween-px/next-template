@@ -1,4 +1,9 @@
+import type { NavGroup } from '@/kit/components/shared/navigation/types';
+import type { TFooter } from '@/kit/components/blocks/footer/type';
+import type { THeader } from '@/kit/components/blocks/header/type';
 import { TAboutContent } from '@/kit/components/blocks/about/type';
+import type { TInfoblocksContent } from '@/kit/components/blocks/infoblocks/type';
+import type { TStatsContent } from '@/kit/components/blocks/stats/type';
 import { THeroContent } from '@/kit/components/blocks/hero/type';
 import { TPortfoliosContent } from '@/kit/components/blocks/portfolios/types';
 import { TReviewsContent } from '@/kit/components/blocks/reviews/types';
@@ -20,6 +25,10 @@ export interface ThemeConfig {
 export interface MetaConfig {
 	title: string;
 	description: string;
+}
+
+export interface NavigationConfig {
+	links: NavGroup[];
 }
 
 // Контент для Portfolio
@@ -99,6 +108,8 @@ export interface PageConfig {
 export type BlockContentByType = {
 	hero: THeroContent;
 	about: TAboutContent;
+	stats: TStatsContent;
+	infoblocks: TInfoblocksContent;
 	services: TServicesContent;
 	portfolios: TPortfoliosContent;
 	teams: TTeamsContent;
@@ -133,12 +144,8 @@ export interface SiteConfig {
 	id: string;
 	siteName: string;
 	theme: ThemeConfig;
-	navigation: any; // Можно дотипизировать позже
+	navigation: NavigationConfig;
 	pages: PageConfig[];
-	footer: {
-		companyInfo: { name: string; description: string };
-		columns: Array<{ title: string; links: Array<{ label: string; href: string }> }>;
-		social: Array<{ platform: string; url: string }>;
-		copyright: string;
-	};
+	header?: THeader;
+	footer: TFooter;
 }

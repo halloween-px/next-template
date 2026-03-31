@@ -8,7 +8,7 @@ import { SheetMobileMenu } from './sheet/mobile-menu';
 
 export default function HeaderV1({
 	linkToMain,
-	navigationData,
+	navigationData = [],
 	navigationVariant = 'menu',
 	buttons,
 }: THeaderProps) {

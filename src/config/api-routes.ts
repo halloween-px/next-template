@@ -7,6 +7,10 @@ export const API_ROUTES = {
 		logout: `${API_ROOT}/auth/logout`,
 		me: `${API_ROOT}/auth/me`,
 	},
+	siteProjects: {
+		root: `${API_ROOT}/site-projects`,
+		byId: (id: string) => `${API_ROOT}/site-projects/${id}`,
+	},
 	users: {
 		root: `${API_ROOT}/users`,
 		byId: (id: string) => `${API_ROOT}/users/${id}`,
