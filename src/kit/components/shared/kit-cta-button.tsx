@@ -22,7 +22,6 @@ export function KitCtaButton({
 	...rest
 }: KitCtaButtonProps) {
 	if (modal) {
-		console.log(modal);
 		return (
 			<SiteModalTrigger modalId={modal} variant={variant} size={size} {...rest}>
 				{label}

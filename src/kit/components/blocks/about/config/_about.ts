@@ -51,7 +51,7 @@ const aboutContentV2 = {
 				'Короткие статусы, демо по итерациям и понятные отчёты — вы всегда знаете, на каком этапе проект.',
 		},
 	],
-	links: [{ label: 'Связаться', href: '#contacts', modal: 'contact' }],
+	links: [{ label: 'Связаться', href: '#contacts', modal: 'contact' as const }],
 	image: 'modern-office-collaboration.png',
 };
 
