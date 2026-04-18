@@ -1,6 +1,7 @@
 import { Container } from '@/kit/components/shared/container';
 import { RegisterForm } from '@/kit/features/auth/register-form';
 import Image from 'next/image';
+import { Suspense } from 'react';
 
 const Register = () => {
 	return (
@@ -10,7 +11,9 @@ const Register = () => {
 					<div className='flex flex-col gap-4 p-6'>
 						<div className='flex flex-1 items-center justify-center'>
 							<div className='w-full max-w-xs'>
-								<RegisterForm />
+								<Suspense fallback={null}>
+									<RegisterForm />
+								</Suspense>
 							</div>
 						</div>
 					</div>

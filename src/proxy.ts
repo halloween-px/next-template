@@ -7,7 +7,7 @@ const authConfig = {
 	protectedRoutes: ['/dashboard', '/admin', '/profile', '/checkout', '/orders'],
 	guestRoutes: ['/login', '/register', '/forgot-password', '/reset-password'],
 	adminRoutes: ['/admin', '/admin/dashboard', '/admin/users', '/admin/settings'],
-	publicRoutes: ['/', '/about', '/services', '/products', '/contact', '/api/public'],
+	publicRoutes: ['/', '/about', '/features', '/services', '/products', '/contact', '/api/public'],
 
 	publicApiRoutes: [API_ROUTES.auth.register, API_ROUTES.auth.login, API_ROUTES.auth.logout],
 };

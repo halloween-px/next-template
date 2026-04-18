@@ -2,7 +2,7 @@
 import { Button } from '@/kit/components/ui/button';
 import { Input } from '@/kit/components/ui/input';
 import { Label } from '@/kit/components/ui/label';
-import { redirect } from 'next/navigation';
+import { safeAuthRedirectUrl } from '@/lib/auth/safe-callback-url';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/kit/components/ui/form';
 import { cn } from '@/lib/utils';
@@ -13,8 +13,10 @@ import { useUserContext } from '@/kit/components/providers/user-provider';
 import { IconAplle } from '../../../../public/icons/IconApple';
 import { IconGoogle } from '../../../../public/icons/IconGoogle';
 import { IconGitHub } from '../../../../public/icons/IconGitHub';
+import { useSearchParams } from 'next/navigation';
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'form'>) {
+	const searchParams = useSearchParams();
 	const { setUser } = useUserContext();
 	const loginMutation = useLoginMutation();
 	const form = useForm<LoginInput>({
@@ -28,7 +30,8 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
 		try {
 			const user = await loginMutation.mutateAsync(data);
 			setUser(user);
-			redirect('/');
+			const next = safeAuthRedirectUrl(searchParams.get('callbackUrl'));
+			window.location.assign(next);
 		} catch {
 			// тост из useLoginMutation
 		}

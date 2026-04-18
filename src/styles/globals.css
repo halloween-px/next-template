@@ -78,3 +78,51 @@
 		cursor: pointer;
 	}
 }
+
+/* CTA «Создать проект» в модалке: фон и блик — анимации выключены при reduce motion. */
+@keyframes create-project-cta-gradient {
+	0% {
+		background-position: 0% 40%;
+	}
+	50% {
+		background-position: 100% 70%;
+	}
+	100% {
+		background-position: 0% 40%;
+	}
+}
+
+@keyframes create-project-cta-shimmer {
+	0% {
+		transform: translate3d(-120%, 0, 0) skewX(-18deg);
+		opacity: 0;
+	}
+	12% {
+		opacity: 0.5;
+	}
+	100% {
+		transform: translate3d(220%, 0, 0) skewX(-18deg);
+		opacity: 0;
+	}
+}
+
+@keyframes create-project-cta-orbit {
+	0% {
+		transform: rotate(0deg) scale(1);
+		opacity: 0.5;
+	}
+	50% {
+		transform: rotate(180deg) scale(1.06);
+		opacity: 0.85;
+	}
+	100% {
+		transform: rotate(360deg) scale(1);
+		opacity: 0.5;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.create-project-cta-anim {
+		animation: none !important;
+	}
+}

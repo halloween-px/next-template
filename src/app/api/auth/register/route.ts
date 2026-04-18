@@ -7,7 +7,6 @@ import { hashPassword } from '@/services/token';
 
 export async function POST(request: NextRequest) {
 	try {
-		console.log('hello');
 		await connectDB();
 
 		const body = await request.json();

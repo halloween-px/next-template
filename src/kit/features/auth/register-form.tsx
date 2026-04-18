@@ -3,7 +3,7 @@
 import { Button } from '@/kit/components/ui/button';
 import { Input } from '@/kit/components/ui/input';
 import { Label } from '@/kit/components/ui/label';
-import { redirect } from 'next/navigation';
+import { safeAuthRedirectUrl } from '@/lib/auth/safe-callback-url';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cn } from '@/lib/utils';
 import { useRegisterMutation } from '@/lib/api/hooks/use-auth-mutations';
@@ -14,8 +14,10 @@ import { useUserContext } from '@/kit/components/providers/user-provider';
 import { IconAplle } from '../../../../public/icons/IconApple';
 import { IconGoogle } from '../../../../public/icons/IconGoogle';
 import { IconGitHub } from '../../../../public/icons/IconGitHub';
+import { useSearchParams } from 'next/navigation';
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<'form'>) {
+	const searchParams = useSearchParams();
 	const registerMutation = useRegisterMutation();
 	const { setUser } = useUserContext();
 	const form = useForm<RegisterInput>({
@@ -29,7 +31,8 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
 		try {
 			const user = await registerMutation.mutateAsync(data);
 			setUser(user);
-			redirect('/');
+			const next = safeAuthRedirectUrl(searchParams.get('callbackUrl'));
+			window.location.assign(next);
 		} catch {
 			// тост из useRegisterMutation
 		}

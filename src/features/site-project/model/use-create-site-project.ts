@@ -1,21 +1,36 @@
 'use client';
 
+import {
+	clearPendingCreateSiteTheme,
+	readPendingCreateSiteTheme,
+} from '@/entities/site-theme/lib/pending-create-site-theme-storage';
+import { DEFAULT_THEME_DRAFT } from '@/entities/site-theme/model/theme-draft';
 import { useCreateSiteProjectMutation } from '@/lib/api/hooks/use-site-project-mutations';
-import { DEFAULT_THEME_DRAFT, type ThemeDraft } from '@/entities/site-theme/model/theme-draft';
+import { siteConfig as defaultSiteConfigTemplate } from '@/templates/site-template';
 import type { DefaultInfoFormInput } from '@/lib/validations/site-project';
+import type { SiteConfig } from '@/types/site';
 import { useCallback, useState } from 'react';
 
 export type CreateSiteProjectResult = { id: string; name: string };
 
-/** Мутация создания проекта + themeDraft под следующий шаг мастера. Подключается в `DefaultInfoForm`. */
+function cloneDefaultSiteConfig(): SiteConfig {
+	return JSON.parse(JSON.stringify(defaultSiteConfigTemplate)) as SiteConfig;
+}
+
+function siteConfigForCreate(themeFromLab: SiteConfig['theme'], projectType: DefaultInfoFormInput['projectType']) {
+	const config = cloneDefaultSiteConfig();
+	config.theme = themeFromLab;
+	config.projectType = projectType;
+	return config;
+}
+
+/** Мутация создания проекта; тема из лаборатории (/test) читается из sessionStorage. */
 export function useCreateSiteProject() {
 	const createMutation = useCreateSiteProjectMutation();
 
-	const [themeDraft, setThemeDraft] = useState<ThemeDraft>(DEFAULT_THEME_DRAFT);
 	const [validationError, setValidationError] = useState<string | null>(null);
 
 	const reset = useCallback(() => {
-		setThemeDraft(DEFAULT_THEME_DRAFT);
 		setValidationError(null);
 		createMutation.reset();
 	}, [createMutation]);
@@ -30,18 +45,28 @@ export function useCreateSiteProject() {
 
 			setValidationError(null);
 			try {
-				const res = await createMutation.mutateAsync({
-					name: trimmed,
-					projectType: data.projectType,
-					themeDraft,
-				});
+				const pendingTheme = readPendingCreateSiteTheme();
+
+				const res = pendingTheme
+					? await createMutation.mutateAsync({
+							name: trimmed,
+							projectType: data.projectType,
+							config: siteConfigForCreate(pendingTheme, data.projectType),
+						})
+					: await createMutation.mutateAsync({
+							name: trimmed,
+							projectType: data.projectType,
+							themeDraft: DEFAULT_THEME_DRAFT,
+						});
+
+				clearPendingCreateSiteTheme();
 				reset();
 				return { id: res.id, name: trimmed };
 			} catch {
 				return null;
 			}
 		},
-		[createMutation, themeDraft, reset]
+		[createMutation, reset]
 	);
 
 	const errorMessage =
@@ -49,8 +74,6 @@ export function useCreateSiteProject() {
 		(createMutation.error instanceof Error ? createMutation.error.message : null);
 
 	return {
-		themeDraft,
-		setThemeDraft,
 		creating: createMutation.isPending,
 		error: errorMessage,
 		setError: setValidationError,

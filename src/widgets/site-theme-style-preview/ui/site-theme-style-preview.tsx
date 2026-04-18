@@ -32,9 +32,11 @@ const defaultPreviewTheme = {
 
 type SiteThemeStylePreviewProps = {
 	theme?: ThemeConfig;
+	/** Вызывается при любом изменении локальной темы (сайдбар / сброс). */
+	onThemeChange?: (theme: ThemeConfig) => void;
 };
 
-export const SiteThemeStylePreview = ({ theme: themeProp }: SiteThemeStylePreviewProps) => {
+export const SiteThemeStylePreview = ({ theme: themeProp, onThemeChange }: SiteThemeStylePreviewProps) => {
 	const preview = useSiteProjectPreviewOptional();
 	const [theme, setTheme] = useState<ThemeConfig>(
 		() => themeProp ?? preview?.config.theme ?? defaultPreviewTheme
@@ -43,6 +45,10 @@ export const SiteThemeStylePreview = ({ theme: themeProp }: SiteThemeStylePrevie
 	useEffect(() => {
 		setTheme(themeProp ?? preview?.config.theme ?? defaultPreviewTheme);
 	}, [themeProp, preview?.projectId]);
+
+	useEffect(() => {
+		onThemeChange?.(theme);
+	}, [theme, onThemeChange]);
 
 	const schemeClass = theme.colorScheme === 'dark' ? 'dark' : undefined;
 	const layers = resolveThemeLayers(theme);

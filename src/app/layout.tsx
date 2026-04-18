@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
+import { PRODUCT_NAME, PRODUCT_TAGLINE } from '@/config/product';
 import { Toaster } from '@/kit/components/ui/sonner';
 import { ThemeProvider } from '@/kit/components/providers/theme-provider';
 import { SiteModalProvider } from '@/kit/features/site-modals';
@@ -13,8 +14,8 @@ import { ReactNode } from 'react';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Template - Базовый шаблон',
-	description: 'Enterprise шаблон на Next.js 14',
+	title: PRODUCT_NAME,
+	description: PRODUCT_TAGLINE,
 };
 
 export default async function RootLayout({
