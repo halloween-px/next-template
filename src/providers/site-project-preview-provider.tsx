@@ -37,3 +37,8 @@ export function useSiteProjectPreview() {
 	}
 	return ctx;
 }
+
+/** Вне провайдера возвращает `null` (например страница `/test`). */
+export function useSiteProjectPreviewOptional() {
+	return useContext(SiteProjectPreviewContext);
+}

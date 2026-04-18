@@ -7,10 +7,11 @@ import {
 } from '@/kit/components/ui/navigation-menu';
 import { NavProps } from '../types';
 import { NavigationItem } from '../navigation-item';
+import { cn } from '@/lib/utils';
 
-export const NavigationMenu = ({ navigationData }: Omit<NavProps, 'variant'>) => {
+export const NavigationMenu = ({ navigationData, className }: Omit<NavProps, 'variant'>) => {
 	return (
-		<nav className='hidden md:flex md:flex-1 md:justify-center'>
+		<nav className={cn('hidden min-w-0 md:flex md:flex-1 md:justify-center', className)}>
 			<NavigationMenuComponent>
 				<NavigationMenuList>
 					{navigationData.map((item) => (

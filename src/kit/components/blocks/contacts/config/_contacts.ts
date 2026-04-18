@@ -1,38 +1,14 @@
-import { getContactsBlockInfo } from '@/templates/company';
+/** Barrel: константы и пресеты contacts-v1 / v2 / v3 */
+export {
+	defaultContactsPreset,
+	CONTACTS_ID,
+	CONTACTS_TYPE,
+	CONTACTS_TYPES,
+} from './_contacts.constants';
+export { contactsConfigV1 } from './_contactsConfig-v1';
+export { contactsConfigV2 } from './_contactsConfig-v2';
+export { contactsConfigV3 } from './_contactsConfig-v3';
 
-export const CONTACTS_ID = 'section-contacts';
-export const CONTACTS_TYPE = 'contacts-v1';
-
-export const contactsConfig = {
-	id: CONTACTS_ID,
-	type: CONTACTS_TYPE,
-	content: {
-		title: 'Свяжитесь с нами',
-		subtitle: 'Готовы начать ваш проект?',
-		description: 'Заполните форму ниже, и мы свяжемся с вами в ближайшее время',
-		contactInfo: getContactsBlockInfo(),
-		formFields: [
-			{
-				name: 'name',
-				label: 'Имя',
-				type: 'text',
-				placeholder: 'Ваше имя',
-				required: true,
-			},
-			{
-				name: 'email',
-				label: 'Email',
-				type: 'email',
-				placeholder: 'Ваш email',
-				required: true,
-			},
-			{
-				name: 'message',
-				label: 'Сообщение',
-				type: 'textarea',
-				placeholder: 'Ваше сообщение',
-				required: true,
-			},
-		],
-	},
-};
+/** Дефолт сайта — v1 */
+import { contactsConfigV1 } from './_contactsConfig-v1';
+export const contactsConfig = contactsConfigV1;

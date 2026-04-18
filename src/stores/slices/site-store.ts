@@ -1,13 +1,11 @@
-import { siteConfig } from '@/templates/site-template';
-import { Block, BlockContentByType } from '@/types/site';
+import type { BaseBlockType, Block, BlockContentByType } from '@/types/site';
 import { create } from 'zustand';
 
-type BlockType = keyof BlockContentByType;
-
-type ChangeBlockTypeProps<T extends BlockType = BlockType> = {
-	newType: T;
+/** Как в `SiteConfig`: `about-v1`, `about-v2`, а не базовый ключ `about`. */
+type ChangeBlockTypeProps<B extends BaseBlockType> = {
+	newType: `${B}-${string}`;
 	sectionId: string;
-	newContent: BlockContentByType[T];
+	newContent: BlockContentByType[B];
 };
 
 type MoveSectionProps = {
@@ -15,10 +13,10 @@ type MoveSectionProps = {
 	direction: 'up' | 'down';
 };
 
-type SectionInput<T extends BlockType = BlockType> = {
+export type SectionInput<B extends BaseBlockType = BaseBlockType> = {
 	id?: string;
-	type: T;
-	content: BlockContentByType[T];
+	type: `${B}-${string}`;
+	content: BlockContentByType[B];
 };
 
 type AddSectionAfterProps = {
@@ -27,11 +25,16 @@ type AddSectionAfterProps = {
 };
 
 type TUseBuilderStore = {
+	activeSection: Block['id'] | null;
 	sections: Array<Block> | null;
 	isLoading: boolean;
 
 	setSection: (sections: Array<Block>) => void;
-	changeBlockType: <T extends BlockType>(arg: ChangeBlockTypeProps<T>) => void;
+	setActiveSection: (id: Block['id']) => void;
+	clearActiveSection: () => void;
+	changeBlockType: <B extends BaseBlockType>(arg: ChangeBlockTypeProps<B>) => void;
+	/** Частичное обновление контента блока (например выравнивание секции). */
+	patchSectionContent: (sectionId: string, patch: Record<string, unknown>) => void;
 
 	moveSection: (arg: MoveSectionProps) => void;
 	removeSection: (sectionId: string) => void;
@@ -43,9 +46,12 @@ const createId = () => {
 };
 
 export const useBuilderStore = create<TUseBuilderStore>((set) => ({
-	sections: siteConfig.pages[0].sections || null,
+	sections: null,
+	activeSection: null,
 	isLoading: false,
 
+	setActiveSection: (id) => set({ activeSection: id }),
+	clearActiveSection: () => set({ activeSection: null }),
 	setSection: (sections: Array<Block>) => set({ sections }),
 
 	changeBlockType: ({ newType, sectionId, newContent }) => {
@@ -60,6 +66,19 @@ export const useBuilderStore = create<TUseBuilderStore>((set) => ({
 				}
 				return section;
 			}),
+		}));
+	},
+
+	patchSectionContent: (sectionId, patch) => {
+		set((state) => ({
+			sections: state.sections?.map((section) =>
+				section.id === sectionId
+					? {
+							...section,
+							content: { ...(section.content as Record<string, unknown>), ...patch },
+						}
+					: section
+			),
 		}));
 	},
 
@@ -108,3 +127,7 @@ export const useBuilderStore = create<TUseBuilderStore>((set) => ({
 		});
 	},
 }));
+
+export const setActiveBlockId = (id: Block['id']) => {
+	useBuilderStore.getState().setActiveSection(id);
+};

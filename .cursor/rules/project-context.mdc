@@ -1,0 +1,12 @@
+---
+description: Карта репозитория и стек — держаться в контексте next-template
+alwaysApply: true
+---
+
+# Контекст проекта next-template
+
+- **Стек**: Next.js (App Router), React, TypeScript, MongoDB (Mongoose), Zustand, **TanStack Query** (`QueryClientProviderWrapper` в `src/app/layout.tsx`), `sonner`.
+- **API к бэкенду приложения**: единый клиент `src/lib/api/client.ts` (`api.get/post/patch/delete`), маршруты — **`src/config/api-routes.ts`** (`API_ROUTES`), хуки в `src/lib/api/hooks/*`, ключи кэша — `src/lib/api/query-keys.ts`.
+- **Слои (ориентир)**: `src/app/` — маршруты и API routes; **`src/features/site-project/`** — сценарии вокруг проекта сайта (создание, удаление, модалки); **`src/entities/site-project/`** — сущность UI; **`src/widgets/site-projects/`** — страница «Мои сайты»; **`src/kit/`** — переиспользуемый UI и блоки контента (см. отдельное правило про kit).
+- **Данные превью билдера**: конфиг проекта хранится в БД (`SiteProject.config`); layout превью подставляет `project.config` из `getSiteProjectForUser` — не путать с статичным `src/templates/site-template.ts` (это дефолт при создании).
+- **Перед ответом по архитектуре** имеет смысл заглянуть в упомянутые папки или спросить, если контекст неочевиден (ветка, окружение).

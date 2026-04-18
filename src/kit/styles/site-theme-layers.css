@@ -1,0 +1,8 @@
+/**
+ * Слои темы (shadcn-style): base → accent → chart → style (геометрия).
+ * Подключайте там, где нужна изоляция по `data-site-base` / `data-site-accent` / `data-site-chart` / `data-site-style`.
+ */
+@import './theme-layers/base.css';
+@import './theme-layers/accent.css';
+@import './theme-layers/chart.css';
+@import './theme-layers/style.css';

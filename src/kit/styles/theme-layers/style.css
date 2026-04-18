@@ -1,0 +1,108 @@
+/**
+ * Стиль (геометрия): радиусы, отступы, толщина бордеров — отдельно от цветовых слоёв.
+ * Подключается после base/accent/chart и переопределяет --radius и токены плотности.
+ */
+[data-site-style="vega"] {
+	--radius: 0.2rem;
+	--site-border-width: 1px;
+	--site-input-px: 0.5rem;
+	--site-input-py: 0.25rem;
+	--site-stack-gap: 0.75rem;
+	--site-stack-gap-lg: 1rem;
+	--site-shell-radius: 1rem;
+	--site-shell-pad: 1rem;
+}
+
+[data-site-style="nova"] {
+	--radius: 0.35rem;
+	--site-border-width: 1px;
+	--site-input-px: 0.625rem;
+	--site-input-py: 0.375rem;
+	--site-stack-gap: 1rem;
+	--site-stack-gap-lg: 1.25rem;
+	--site-shell-radius: 1.25rem;
+	--site-shell-pad: 1.25rem;
+}
+
+[data-site-style="maia"] {
+	--radius: 0.5rem;
+	--site-border-width: 2px;
+	--site-input-px: 0.75rem;
+	--site-input-py: 0.5rem;
+	--site-stack-gap: 1.125rem;
+	--site-stack-gap-lg: 1.375rem;
+	--site-shell-radius: 1.5rem;
+	--site-shell-pad: 1.5rem;
+}
+
+[data-site-style="lyra"] {
+	--radius: 0.625rem;
+	--site-border-width: 1px;
+	--site-input-px: 0.75rem;
+	--site-input-py: 0.25rem;
+	--site-stack-gap: 1rem;
+	--site-stack-gap-lg: 1.5rem;
+	--site-shell-radius: 1.75rem;
+	--site-shell-pad: 1.5rem;
+}
+
+[data-site-style="mira"] {
+	--radius: 0.75rem;
+	--site-border-width: 2px;
+	--site-input-px: 0.875rem;
+	--site-input-py: 0.5rem;
+	--site-stack-gap: 1.25rem;
+	--site-stack-gap-lg: 1.625rem;
+	--site-shell-radius: 2rem;
+	--site-shell-pad: 1.75rem;
+}
+
+[data-site-style="luma"] {
+	--radius: 1rem;
+	--site-border-width: 1px;
+	--site-input-px: 1rem;
+	--site-input-py: 0.625rem;
+	--site-stack-gap: 1.5rem;
+	--site-stack-gap-lg: 1.75rem;
+	--site-shell-radius: 2rem;
+	--site-shell-pad: 2rem;
+}
+
+/* Карточки не трогаем: [data-slot=card] — только классы ui/card (и т.п.), иначе специфичность [data-site-style] … перебивает Tailwind. */
+
+[data-site-style] [data-slot='input'] {
+	padding-left: var(--site-input-px);
+	padding-right: var(--site-input-px);
+	padding-top: var(--site-input-py);
+	padding-bottom: var(--site-input-py);
+	border-width: var(--site-border-width);
+}
+
+[data-site-style] [data-slot='textarea'] {
+	padding-left: var(--site-input-px);
+	padding-right: var(--site-input-px);
+	padding-top: var(--site-input-py);
+	padding-bottom: var(--site-input-py);
+	border-width: var(--site-border-width);
+}
+
+/* Оболочка превью и сетки — через классы на контейнере */
+[data-site-style] .site-preview-shell {
+	border-radius: var(--site-shell-radius);
+	padding: var(--site-shell-pad);
+}
+
+[data-site-style] .site-preview-grid {
+	gap: var(--site-stack-gap);
+}
+
+@media (min-width: 1024px) {
+	[data-site-style] .site-preview-grid {
+		gap: var(--site-stack-gap-lg);
+	}
+}
+
+[data-site-style] .site-preview-col {
+	gap: var(--site-stack-gap);
+}
+

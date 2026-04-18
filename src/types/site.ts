@@ -9,18 +9,23 @@ import { TPortfoliosContent } from '@/kit/components/blocks/portfolios/types';
 import { TReviewsContent } from '@/kit/components/blocks/reviews/types';
 import { TServicesContent } from '@/kit/components/blocks/services/types';
 import { TTeamsContent } from '@/kit/components/blocks/teams/types';
+import type { TContactsContent } from '@/kit/components/blocks/contacts/types';
+import type { ThemeConfig } from '@/types/site-theme';
+import type { SiteCompanyInfo } from '@/types/site-company-info';
+import type { SiteUiKit } from '@/types/site-ui-kit';
 
-export type ColorScheme = 'light' | 'dark';
+export type { SiteCompanyInfo } from '@/types/site-company-info';
 
-export interface ThemeConfig {
-	colorScheme: ColorScheme;
-	primaryColor: string;
-	accentColor: string;
-	fonts: {
-		heading: string;
-		body: string;
-	};
-}
+export type {
+	ColorScheme,
+	SiteThemeAccentId,
+	SiteThemeBaseId,
+	SiteThemeChartId,
+	SiteThemePaletteId,
+	SiteThemeStyleId,
+	ThemeConfig,
+	ThemeLayers,
+} from '@/types/site-theme';
 
 export interface MetaConfig {
 	title: string;
@@ -81,22 +86,11 @@ export interface TestimonialsContent {
 	testimonials: Testimonial[];
 }
 
-// Контент для Contact
-export interface ContactField {
-	name: string;
-	label: string;
-	type: 'text' | 'email' | 'tel' | 'textarea';
-	placeholder: string;
-	required: boolean;
-}
-
-export interface ContactContent {
-	title: string;
-	subtitle: string;
-	description: string;
-	contactInfo: Array<{ icon: string; label: string; value: string }>;
-	formFields: ContactField[];
-}
+/** @deprecated используйте `TContactsFormField` из `@/kit/components/blocks/contacts/types` */
+export type {
+	TContactsFormField as ContactField,
+	TContactsContent as ContactContent,
+} from '@/kit/components/blocks/contacts/types';
 export interface PageConfig {
 	id: string;
 	name: string;
@@ -114,6 +108,7 @@ export type BlockContentByType = {
 	portfolios: TPortfoliosContent;
 	teams: TTeamsContent;
 	reviews: TReviewsContent;
+	contacts: TContactsContent;
 	custom: any;
 };
 
@@ -122,7 +117,7 @@ export type BlockType = `${BaseBlockType}-${string}`;
 export type Block =
 	| {
 			[K in BaseBlockType]: {
-				id: string;
+				id: `section-${string}`;
 				type: `${K}-${string}`;
 				content: BlockContentByType[K];
 			};
@@ -140,6 +135,9 @@ export interface ServicesContent {
 	image: string;
 	services: Array<{ title: string; description: string; image: string }>;
 }
+/** Сохраняется при создании проекта из формы «Название + тип сайта». */
+export type SiteProjectKind = 'landing' | 'multipage' | 'landing_store' | 'multipage_store';
+
 export interface SiteConfig {
 	id: string;
 	siteName: string;
@@ -148,4 +146,10 @@ export interface SiteConfig {
 	pages: PageConfig[];
 	header?: THeader;
 	footer: TFooter;
+	/** Как в `getSiteCompanyInfo()` — для блоков и секций с контактами компании. */
+	companyInfo?: SiteCompanyInfo;
+	/** Заданный при создании тип шаблона (лендинг, магазин и т.д.). */
+	projectType?: SiteProjectKind;
+	/** Глобальные пресеты базового kit (карточки v1, кнопки и т.д.). */
+	uiKit?: Partial<SiteUiKit>;
 }

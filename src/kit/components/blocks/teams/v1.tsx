@@ -1,13 +1,24 @@
 import { Card, CardContent } from '@/kit/components/ui/card';
-import { Badge } from '@/kit/components/ui/badge';
-import { Button } from '@/kit/components/ui/button';
-import { Linkedin, Twitter, Github, Section } from 'lucide-react';
 import Image from 'next/image';
 import { TTeamsContent } from './types';
 import { Container } from '@/kit/components/shared/container';
+import type { SectionTitleVariant } from '@/kit/components/shared/sections/section-title';
 import { SectionTitle } from '@/kit/components/shared/sections/section-title';
+import { TeamSocialIconRow } from './ui/team-social-icon-row';
+import type { SectionTextAlign } from '@/types/section-layout';
 
-export default function TeamV1({ description, subtitle, teams, title }: TTeamsContent) {
+export default function TeamV1({
+	description,
+	subtitle,
+	teams,
+	title,
+	sectionTitleVariant = 'default',
+	sectionTitleAlign,
+	sectionBodyAlign,
+}: TTeamsContent & { sectionTitleVariant?: SectionTitleVariant }) {
+	const titleAlign: SectionTextAlign = sectionTitleAlign ?? 'center';
+	const bodyAlign: SectionTextAlign = sectionBodyAlign ?? titleAlign;
+
 	return (
 		<section id='team' className='relative py-24 overflow-hidden bg-muted/30'>
 			{/* Background grid pattern */}
@@ -21,7 +32,14 @@ export default function TeamV1({ description, subtitle, teams, title }: TTeamsCo
 
 			<Container>
 				<div className='container px-4 md:px-6'>
-					<SectionTitle title={title} subtitle={subtitle} description={description} />
+					<SectionTitle
+						variant={sectionTitleVariant}
+						title={title}
+						subtitle={subtitle}
+						description={description}
+						align={titleAlign}
+						descriptionAlign={bodyAlign}
+					/>
 
 					<div className='grid gap-8 md:grid-cols-2 lg:grid-cols-4'>
 						{teams.map((member) => (
@@ -39,35 +57,7 @@ export default function TeamV1({ description, subtitle, teams, title }: TTeamsCo
 									<div className='absolute bottom-0 left-0 right-0 p-6'>
 										<h3 className='text-xl font-bold text-foreground mb-1'>{member.name}</h3>
 										<p className='text-sm text-primary font-medium mb-3'>{member.role}</p>
-										<div className='flex gap-2'>
-											<Button
-												size='icon'
-												variant='ghost'
-												className='h-8 w-8 hover:bg-primary/20'
-												asChild>
-												<a href={member.social.linkedin} target='_blank' rel='noopener noreferrer'>
-													<Linkedin className='h-4 w-4' />
-												</a>
-											</Button>
-											<Button
-												size='icon'
-												variant='ghost'
-												className='h-8 w-8 hover:bg-primary/20'
-												asChild>
-												<a href={member.social.twitter} target='_blank' rel='noopener noreferrer'>
-													<Twitter className='h-4 w-4' />
-												</a>
-											</Button>
-											<Button
-												size='icon'
-												variant='ghost'
-												className='h-8 w-8 hover:bg-primary/20'
-												asChild>
-												<a href={member.social.github} target='_blank' rel='noopener noreferrer'>
-													<Github className='h-4 w-4' />
-												</a>
-											</Button>
-										</div>
+										<TeamSocialIconRow social={member.social} />
 									</div>
 								</div>
 								<CardContent className='p-6'>

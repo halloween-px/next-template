@@ -1,10 +1,11 @@
 'use client';
 
 import { useSiteProjectPreview } from '@/providers/site-project-preview-provider';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export function useProjectPreviewRoute(projectId: string) {
 	const pathname = usePathname() ?? '';
+	const queryParams = useSearchParams();
 	const { config } = useSiteProjectPreview();
 
 	const projectBase = `/template/project/${projectId}`;
@@ -12,6 +13,7 @@ export function useProjectPreviewRoute(projectId: string) {
 	const currentSlug = rest === '' ? '/' : rest;
 	const isHome = currentSlug === '/';
 	const currentPage = config.pages.find((page) => page.slug === currentSlug);
+	const isEditing = queryParams.get('editor') === '1';
 
 	return {
 		config,
@@ -19,5 +21,6 @@ export function useProjectPreviewRoute(projectId: string) {
 		currentSlug,
 		isHome,
 		currentPage,
+		isEditing,
 	};
 }

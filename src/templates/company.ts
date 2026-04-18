@@ -82,8 +82,8 @@ export function getFooterSocial(): FooterSocial[] {
 export function getContactsBlockInfo() {
 	const { phone, email, address } = company.contacts;
 	return [
-		{ icon: 'Mail', label: email.label, value: email.value },
-		{ icon: 'Phone', label: phone.label, value: phone.value },
-		{ icon: 'MapPin', label: address.label, value: address.value },
+		{ icon: 'Mail', label: email.label, value: email.value, href: email.href },
+		{ icon: 'Phone', label: phone.label, value: phone.value, href: phone.href },
+		{ icon: 'MapPin', label: address.label, value: address.value, href: address.href },
 	];
 }

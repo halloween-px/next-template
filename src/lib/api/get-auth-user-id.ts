@@ -1,11 +1,6 @@
-import { cookies } from 'next/headers';
-import { verifyToken } from '@/services/token';
+import { getSession } from '@/services/auth';
 
 export async function getAuthUserId(): Promise<string | null> {
-	const cookieStore = await cookies();
-	const token = cookieStore.get('auth-token')?.value;
-	if (!token) return null;
-	const decoded = verifyToken(token);
-	if (!decoded?.userId) return null;
-	return String(decoded.userId);
+	const session = await getSession();
+	return session?.id ?? null;
 }

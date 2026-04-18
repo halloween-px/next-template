@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/kit/components/ui/button';
 import { Container } from '@/kit/components/shared/container';
 import { useUserContext } from '../../providers/user-provider';
-import { useMutation } from '@/kit/hooks/useMutation';
-import { API_ROUTES } from '@/config/api-routes';
+import { useLogoutMutation } from '@/lib/api/hooks/use-auth-mutations';
 import { ROUTES } from '@/config/routes';
 
 const navigations = [
@@ -25,11 +24,15 @@ const navigations = [
 
 export function Header() {
 	const { user, logout } = useUserContext();
-	const { mutate, isLoading } = useMutation(API_ROUTES.auth.logout);
+	const logoutMutation = useLogoutMutation();
 
 	const handleLogout = async () => {
-		await mutate();
-		logout();
+		try {
+			await logoutMutation.mutateAsync();
+			logout();
+		} catch {
+			// тост из useLogoutMutation
+		}
 	};
 
 	return (
@@ -65,8 +68,8 @@ export function Header() {
 								variant='outline'
 								size='sm'
 								onClick={handleLogout}
-								loading={isLoading}
-								disabled={isLoading}>
+								loading={logoutMutation.isPending}
+								disabled={logoutMutation.isPending}>
 								Выйти
 							</Button>
 						</>

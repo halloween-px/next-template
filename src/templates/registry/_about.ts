@@ -1,4 +1,4 @@
-import { aboutConfig } from '@/kit/components/blocks/about/config/_about';
+import { aboutConfig, aboutConfigV2 } from '@/kit/components/blocks/about/config/_about';
 import { TAbout } from '@/kit/components/blocks/about/type';
 
 export const ABOUT_TYPES = {
@@ -12,7 +12,7 @@ export const aboutConfigs: Record<string, TAbout> = {
 		type: ABOUT_TYPES.V1,
 	},
 	[ABOUT_TYPES.V2]: {
-		...aboutConfig,
+		...aboutConfigV2,
 		type: ABOUT_TYPES.V2,
 	},
 };

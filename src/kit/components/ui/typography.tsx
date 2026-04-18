@@ -16,9 +16,17 @@ interface TitleProps extends BaseTypographyProps {
 	as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
+const textVariants = {
+	default: '',
+	/** Цитата / акцент: левая граница, курсив */
+	blockquote: 'border-l-4 border-primary pl-5 italic text-foreground/90',
+} as const;
+
 interface TextProps extends BaseTypographyProps {
 	size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl';
-	as?: 'p' | 'span' | 'div';
+	as?: 'p' | 'span' | 'div' | 'blockquote';
+	/** Визуальный пресет поверх базовых стилей текста */
+	variant?: keyof typeof textVariants;
 }
 
 const colorClasses = {
@@ -105,7 +113,8 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
 	(
 		{
 			size = 'base',
-			as: Component = 'p',
+			as,
+			variant: variantProp = 'default',
 			children,
 			className,
 			gradient = false,
@@ -116,6 +125,10 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
 		},
 		ref
 	) => {
+		const variant = variantProp;
+		const Component =
+			as ?? (variant === 'blockquote' ? 'blockquote' : 'p');
+
 		const sizeClasses = {
 			xs: 'text-xs',
 			sm: 'text-sm',
@@ -134,6 +147,7 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
 					gradient ? gradientClass : colorClasses[color],
 					alignClasses[align],
 					'leading-relaxed',
+					textVariants[variant],
 					className
 				),
 				...props,

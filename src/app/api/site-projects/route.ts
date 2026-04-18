@@ -4,6 +4,7 @@ import SiteProject from '@/lib/db/models/SiteProject';
 import { getAuthUserId } from '@/lib/api/get-auth-user-id';
 import { listSiteProjectsForUser } from '@/lib/db/site-project-queries';
 import { createSiteProjectSchema } from '@/lib/validations/site-project';
+import { applyThemeDraftToSiteConfig } from '@/entities/site-theme/lib/apply-theme-draft-to-site-config';
 import { siteConfig as defaultSiteConfig } from '@/templates/site-template';
 import type { SiteConfig } from '@/types/site';
 
@@ -43,8 +44,14 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		const { name, config: bodyConfig } = parsed.data;
-		const config: SiteConfig = bodyConfig ? (bodyConfig as SiteConfig) : cloneDefaultConfig();
+		const { name, projectType, config: bodyConfig, themeDraft } = parsed.data;
+		let config: SiteConfig = bodyConfig ? (bodyConfig as SiteConfig) : cloneDefaultConfig();
+		if (themeDraft && !bodyConfig) {
+			config = applyThemeDraftToSiteConfig(config, themeDraft);
+		}
+		if (projectType) {
+			config = { ...config, projectType };
+		}
 
 		await connectDB();
 

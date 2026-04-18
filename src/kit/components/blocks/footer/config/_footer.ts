@@ -42,7 +42,7 @@ export const footerConfig: TFooter = {
 		contacts: getFooterContacts(),
 		social: getFooterSocial(),
 		ctas: [
-			{ label: 'Связаться', href: '#contact', variant: 'default' },
+			{ label: 'Связаться', href: '#contacts', variant: 'default', modal: 'contact' },
 			{ label: 'Портфолио', href: '#portfolio', variant: 'outline' },
 		],
 		bottomLinks: [

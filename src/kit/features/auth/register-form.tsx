@@ -6,19 +6,17 @@ import { Label } from '@/kit/components/ui/label';
 import { redirect } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cn } from '@/lib/utils';
-import { useMutation } from '@/kit/hooks/useMutation';
+import { useRegisterMutation } from '@/lib/api/hooks/use-auth-mutations';
 import { useForm } from 'react-hook-form';
 import { defaultRegisterSchema, registerSchema, type RegisterInput } from '@/lib/validations/auth';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/kit/components/ui/form';
-import { TUser } from '@/kit/stores/slices/auth-store';
-import { API_ROUTES } from '@/config/api-routes';
 import { useUserContext } from '@/kit/components/providers/user-provider';
 import { IconAplle } from '../../../../public/icons/IconApple';
 import { IconGoogle } from '../../../../public/icons/IconGoogle';
 import { IconGitHub } from '../../../../public/icons/IconGitHub';
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<'form'>) {
-	const { mutate, isLoading } = useMutation<TUser>(API_ROUTES.auth.register);
+	const registerMutation = useRegisterMutation();
 	const { setUser } = useUserContext();
 	const form = useForm<RegisterInput>({
 		resolver: zodResolver(registerSchema),
@@ -28,11 +26,12 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
 	const { handleSubmit, control } = form;
 
 	const onSubmit = async (data: RegisterInput) => {
-		const user = await mutate(data);
-
-		if (user.data && user.success) {
-			setUser(user.data);
+		try {
+			const user = await registerMutation.mutateAsync(data);
+			setUser(user);
 			redirect('/');
+		} catch {
+			// тост из useRegisterMutation
 		}
 	};
 
@@ -118,7 +117,11 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
 						)}
 					/>
 				</div>
-				<Button type='submit' className='w-full' loading={isLoading} disabled={isLoading}>
+				<Button
+					type='submit'
+					className='w-full'
+					loading={registerMutation.isPending}
+					disabled={registerMutation.isPending}>
 					Войти
 				</Button>
 				<div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'>

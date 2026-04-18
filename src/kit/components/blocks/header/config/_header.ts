@@ -1,14 +1,18 @@
 import { THeader } from '../type';
 
+/** Идентификатор блока хедера в превью билдера (клик → левая панель). */
+export const SECTION_HEADER_ID = 'section-header' as const;
+
 /**
  * Только внешний вид и CTA хедера. Ссылки меню — в `siteConfig.navigation`
  * (см. `mergeHeaderWithSiteNavigation` в рендерере и экспорте).
  */
 export const headerConfig: THeader = {
 	type: 'header-v1',
-	id: 'section-header',
+	id: SECTION_HEADER_ID,
 	content: {
-		sticky: true,
+		/** `true` — sticky вверху области сайта; иначе обычный поток. */
+		sticky: false,
 		navigationVariant: 'menu',
 		showPhone: true,
 		buttons: [

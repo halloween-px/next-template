@@ -2,6 +2,7 @@
 
 import { AnchorLink } from '@/kit/components/shared/AnchorLink';
 import { Container } from '@/kit/components/shared/container';
+import { openSiteModal } from '@/kit/features/site-modals';
 import { cn } from '@/lib/utils';
 import { company, getFooterContacts } from '@/templates/company';
 import {
@@ -67,8 +68,9 @@ export default function FooterV1({
 
 	const ctaPrimary = ctas?.[0] ?? {
 		label: 'Связаться',
-		href: '#contact',
+		href: '#contacts',
 		variant: 'default' as const,
+		modal: 'contact' as const,
 	};
 	const ctaSecondary = ctas?.[1] ?? {
 		label: 'Портфолио',
@@ -123,22 +125,46 @@ export default function FooterV1({
 					</div>
 
 					<div className='flex shrink-0 flex-wrap gap-2 md:justify-end'>
-						<AnchorLink
-							href={ctaPrimary.href}
-							className={cn(
-								'inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition-colors',
-								ctaPrimary.variant === 'outline' ? ctaOutline : ctaSolid,
-							)}>
-							{ctaPrimary.label}
-						</AnchorLink>
-						<AnchorLink
-							href={ctaSecondary.href}
-							className={cn(
-								'inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition-colors',
-								ctaSecondary.variant === 'default' ? ctaSolid : ctaOutline,
-							)}>
-							{ctaSecondary.label}
-						</AnchorLink>
+						{ctaPrimary.modal ? (
+							<button
+								type='button'
+								onClick={() => openSiteModal(ctaPrimary.modal!)}
+								className={cn(
+									'inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition-colors',
+									ctaPrimary.variant === 'outline' ? ctaOutline : ctaSolid,
+								)}>
+								{ctaPrimary.label}
+							</button>
+						) : (
+							<AnchorLink
+								href={ctaPrimary.href}
+								className={cn(
+									'inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition-colors',
+									ctaPrimary.variant === 'outline' ? ctaOutline : ctaSolid,
+								)}>
+								{ctaPrimary.label}
+							</AnchorLink>
+						)}
+						{ctaSecondary.modal ? (
+							<button
+								type='button'
+								onClick={() => openSiteModal(ctaSecondary.modal!)}
+								className={cn(
+									'inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition-colors',
+									ctaSecondary.variant === 'default' ? ctaSolid : ctaOutline,
+								)}>
+								{ctaSecondary.label}
+							</button>
+						) : (
+							<AnchorLink
+								href={ctaSecondary.href}
+								className={cn(
+									'inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition-colors',
+									ctaSecondary.variant === 'default' ? ctaSolid : ctaOutline,
+								)}>
+								{ctaSecondary.label}
+							</AnchorLink>
+						)}
 					</div>
 				</div>
 

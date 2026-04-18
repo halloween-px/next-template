@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import { Toaster } from '@/kit/components/ui/sonner';
 import { ThemeProvider } from '@/kit/components/providers/theme-provider';
+import { SiteModalProvider } from '@/kit/features/site-modals';
+import { ModalProvider } from '@/providers/modal-provider';
+import { QueryClientProviderWrapper } from '@/providers/query-client-provider';
 import { getSession } from '@/services/auth';
 import { UserProvider } from '@/kit/components/providers/user-provider';
 import { ReactNode } from 'react';
@@ -25,7 +28,13 @@ export default async function RootLayout({
 		<html lang='ru' suppressHydrationWarning>
 			<body className={inter.className}>
 				<UserProvider initialUser={user}>
-					<ThemeProvider>{children}</ThemeProvider>
+					<QueryClientProviderWrapper>
+						<ThemeProvider>
+							{children}
+							<SiteModalProvider />
+							<ModalProvider />
+						</ThemeProvider>
+					</QueryClientProviderWrapper>
 				</UserProvider>
 				<Toaster />
 			</body>

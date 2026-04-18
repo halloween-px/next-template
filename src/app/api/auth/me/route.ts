@@ -1,32 +1,12 @@
-// src/app/api/auth/me/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { verifyToken } from '@/services/auth';
-import { connectDB } from '@/lib/db/connections/mongoose';
-import User from '@/lib/db/models/User';
+import { NextResponse } from 'next/server';
+import { getSession } from '@/services/auth';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
 	try {
-		await connectDB();
+		const user = await getSession();
 
-		const cookieStore = await cookies();
-		const token = cookieStore.get('auth-token')?.value;
-
-		if (!token) {
-			return NextResponse.json({ success: false, error: 'Не авторизован' }, { status: 401 });
-		}
-
-		const decoded = verifyToken(token);
-		if (!decoded) {
-			return NextResponse.json({ success: false, error: 'Невалидный токен' }, { status: 401 });
-		}
-
-		const user = await User.findById(decoded.userId).select('-password');
 		if (!user) {
-			return NextResponse.json(
-				{ success: false, error: 'Пользователь не найден' },
-				{ status: 404 }
-			);
+			return NextResponse.json({ success: false, error: 'Не авторизован' }, { status: 401 });
 		}
 
 		return NextResponse.json({

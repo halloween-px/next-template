@@ -1,0 +1,162 @@
+/**
+ * ???? ????????: ?????? --chart-1 ? --chart-5.
+ */
+[data-site-chart="slate"] {
+	--chart-1: oklch(0.646 0.222 41.116);
+	--chart-2: oklch(0.6 0.118 184.704);
+	--chart-3: oklch(0.398 0.07 227.392);
+	--chart-4: oklch(0.828 0.189 84.429);
+	--chart-5: oklch(0.769 0.188 70.08);
+}
+[data-site-chart="slate"].dark {
+	--chart-1: oklch(0.488 0.243 264.376);
+	--chart-2: oklch(0.696 0.17 162.48);
+	--chart-3: oklch(0.769 0.188 70.08);
+	--chart-4: oklch(0.627 0.265 303.9);
+	--chart-5: oklch(0.645 0.246 16.439);
+}
+[data-site-chart="blue"] {
+	--chart-1: oklch(0.62 0.2 245);
+	--chart-2: oklch(0.55 0.18 232);
+	--chart-3: oklch(0.5 0.16 258);
+	--chart-4: oklch(0.72 0.12 220);
+	--chart-5: oklch(0.45 0.14 268);
+}
+[data-site-chart="blue"].dark {
+	--chart-1: oklch(0.72 0.16 245);
+	--chart-2: oklch(0.65 0.14 232);
+	--chart-3: oklch(0.58 0.12 258);
+	--chart-4: oklch(0.78 0.1 220);
+	--chart-5: oklch(0.55 0.12 268);
+}
+[data-site-chart="emerald"] {
+	--chart-1: oklch(0.72 0.16 155);
+	--chart-2: oklch(0.596 0.217 155.93);
+	--chart-3: oklch(0.52 0.19 158.2);
+	--chart-4: oklch(0.65 0.18 142);
+	--chart-5: oklch(0.55 0.16 168);
+}
+[data-site-chart="emerald"].dark {
+	--chart-1: oklch(0.72 0.16 155);
+	--chart-2: oklch(0.65 0.19 155.2);
+	--chart-3: oklch(0.596 0.217 155.93);
+	--chart-4: oklch(0.52 0.19 158.2);
+	--chart-5: oklch(0.65 0.18 142);
+}
+[data-site-chart="violet"] {
+	--chart-1: oklch(0.811 0.111 293.571);
+	--chart-2: oklch(0.606 0.25 292.717);
+	--chart-3: oklch(0.541 0.281 293.009);
+	--chart-4: oklch(0.491 0.27 292.581);
+	--chart-5: oklch(0.432 0.232 292.759);
+}
+[data-site-chart="violet"].dark {
+	--chart-1: oklch(0.811 0.111 293.571);
+	--chart-2: oklch(0.606 0.25 292.717);
+	--chart-3: oklch(0.541 0.281 293.009);
+	--chart-4: oklch(0.491 0.27 292.581);
+	--chart-5: oklch(0.432 0.232 292.759);
+}
+[data-site-chart="amber"] {
+	--chart-1: oklch(0.65 0.2 38);
+	--chart-2: oklch(0.58 0.18 32);
+	--chart-3: oklch(0.72 0.15 48);
+	--chart-4: oklch(0.55 0.16 28);
+	--chart-5: oklch(0.68 0.14 55);
+}
+[data-site-chart="amber"].dark {
+	--chart-1: oklch(0.72 0.16 38);
+	--chart-2: oklch(0.65 0.14 32);
+	--chart-3: oklch(0.78 0.12 48);
+	--chart-4: oklch(0.6 0.15 28);
+	--chart-5: oklch(0.75 0.13 55);
+}
+[data-site-chart="rose"] {
+	--chart-1: oklch(0.811 0.12 18.2);
+	--chart-2: oklch(0.645 0.246 16.439);
+	--chart-3: oklch(0.577 0.245 16.439);
+	--chart-4: oklch(0.52 0.22 20.1);
+	--chart-5: oklch(0.48 0.2 22.5);
+}
+[data-site-chart="rose"].dark {
+	--chart-1: oklch(0.811 0.12 18.2);
+	--chart-2: oklch(0.712 0.194 17.5);
+	--chart-3: oklch(0.645 0.246 16.439);
+	--chart-4: oklch(0.577 0.245 16.439);
+	--chart-5: oklch(0.52 0.22 20.1);
+}
+
+[data-site-chart="yellow"] {
+	--chart-1: oklch(0.88 0.18 96);
+	--chart-2: oklch(0.78 0.19 94);
+	--chart-3: oklch(0.68 0.17 92);
+	--chart-4: oklch(0.82 0.14 98);
+	--chart-5: oklch(0.58 0.14 88);
+}
+[data-site-chart="yellow"].dark {
+	--chart-1: oklch(0.82 0.16 96);
+	--chart-2: oklch(0.74 0.17 94);
+	--chart-3: oklch(0.66 0.15 92);
+	--chart-4: oklch(0.78 0.12 98);
+	--chart-5: oklch(0.62 0.13 88);
+}
+
+[data-site-chart="ocean"] {
+	--chart-1: oklch(0.62 0.2 242);
+	--chart-2: oklch(0.55 0.18 242);
+	--chart-3: oklch(0.48 0.16 242);
+	--chart-4: oklch(0.72 0.14 238);
+	--chart-5: oklch(0.42 0.14 250);
+}
+[data-site-chart="ocean"].dark {
+	--chart-1: oklch(0.72 0.16 242);
+	--chart-2: oklch(0.65 0.14 242);
+	--chart-3: oklch(0.58 0.12 242);
+	--chart-4: oklch(0.78 0.1 238);
+	--chart-5: oklch(0.52 0.12 250);
+}
+
+[data-site-chart="sunset"] {
+	--chart-1: oklch(0.68 0.2 38);
+	--chart-2: oklch(0.58 0.18 36);
+	--chart-3: oklch(0.52 0.16 34);
+	--chart-4: oklch(0.74 0.14 42);
+	--chart-5: oklch(0.48 0.14 32);
+}
+[data-site-chart="sunset"].dark {
+	--chart-1: oklch(0.74 0.16 38);
+	--chart-2: oklch(0.66 0.14 36);
+	--chart-3: oklch(0.58 0.12 34);
+	--chart-4: oklch(0.78 0.11 42);
+	--chart-5: oklch(0.55 0.12 32);
+}
+
+[data-site-chart="lime"] {
+	--chart-1: oklch(0.78 0.18 125);
+	--chart-2: oklch(0.68 0.2 125);
+	--chart-3: oklch(0.58 0.18 125);
+	--chart-4: oklch(0.82 0.14 122);
+	--chart-5: oklch(0.5 0.16 128);
+}
+[data-site-chart="lime"].dark {
+	--chart-1: oklch(0.76 0.16 125);
+	--chart-2: oklch(0.68 0.15 125);
+	--chart-3: oklch(0.6 0.14 125);
+	--chart-4: oklch(0.8 0.12 122);
+	--chart-5: oklch(0.55 0.13 128);
+}
+
+[data-site-chart="fuchsia"] {
+	--chart-1: oklch(0.78 0.2 320);
+	--chart-2: oklch(0.65 0.24 320);
+	--chart-3: oklch(0.55 0.22 318);
+	--chart-4: oklch(0.72 0.16 322);
+	--chart-5: oklch(0.48 0.2 318);
+}
+[data-site-chart="fuchsia"].dark {
+	--chart-1: oklch(0.74 0.18 320);
+	--chart-2: oklch(0.66 0.16 320);
+	--chart-3: oklch(0.58 0.14 318);
+	--chart-4: oklch(0.78 0.12 322);
+	--chart-5: oklch(0.52 0.14 318);
+}

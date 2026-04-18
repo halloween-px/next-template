@@ -5,15 +5,22 @@ import { THeaderProps } from './type';
 import { Logo } from '@/kit/components/shared/logo';
 import { Navigation } from '@/kit/components/shared/navigation/navigation';
 import { SheetMobileMenu } from './sheet/mobile-menu';
+import { cn } from '@/lib/utils';
 
 export default function HeaderV1({
 	linkToMain,
 	navigationData = [],
 	navigationVariant = 'menu',
+	sticky = false,
 	buttons,
 }: THeaderProps) {
 	return (
-		<header className='sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
+		<header
+			className={cn(
+				/* z-50 всегда: без sticky выпадающее меню оказывается под hero (z-[2+] ниже по DOM). */
+				'relative z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60',
+				sticky && 'sticky top-0',
+			)}>
 			<Container>
 				<div className='container flex h-16 items-center justify-between'>
 					<Logo linkToMain={linkToMain} />

@@ -7,11 +7,15 @@ export type TReviewsItem = {
 	rating: number;
 };
 
+import type { SectionTextAlign } from '@/types/section-layout';
+
 export type TReviewsContent = {
 	title: string;
 	subtitle: string;
 	description: string;
 	reviews: Array<TReviewsItem>;
+	sectionTitleAlign?: SectionTextAlign;
+	sectionBodyAlign?: SectionTextAlign;
 };
 
 export type TReviews = {

@@ -1,6 +1,5 @@
 import { getSiteProjectForUser } from '@/lib/db/site-project-queries';
 import { getSession } from '@/services/auth';
-import { ProjectPreviewActions } from '@/widgets/site-project-preview/ui/project-preview-actions';
 import { notFound, redirect } from 'next/navigation';
 import { ProjectPreviewScene } from './ui/project-preview-scene';
 
@@ -24,7 +23,6 @@ export default async function ProjectPreviewLayout({ children, params }: Props) 
 	return (
 		<ProjectPreviewScene config={project.config} projectId={projectId}>
 			{children}
-			<ProjectPreviewActions />
 		</ProjectPreviewScene>
 	);
 }

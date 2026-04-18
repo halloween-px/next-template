@@ -8,10 +8,14 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { TPortfoliosContent } from './types';
 import { Container } from '@/kit/components/shared/container';
+import type { SectionTitleVariant } from '@/kit/components/shared/sections/section-title';
 import { SectionTitle } from '@/kit/components/shared/sections/section-title';
 import { Section } from '@/kit/components/shared/sections/section';
 import { SectionBackground } from '@/kit/components/shared/sections/section-background';
 import { EmptyBlock } from '@/kit/components/shared/empty/empty-block';
+import type { SectionTextAlign } from '@/types/section-layout';
+import { flexJustifyFromAlign } from '@/lib/section-align';
+import { cn } from '@/lib/utils';
 
 export default function PortfolioV1({
 	categories,
@@ -19,7 +23,13 @@ export default function PortfolioV1({
 	projects,
 	subtitle,
 	title,
-}: TPortfoliosContent) {
+	sectionTitleVariant = 'default',
+	sectionTitleAlign,
+	sectionBodyAlign,
+}: TPortfoliosContent & { sectionTitleVariant?: SectionTitleVariant }) {
+	const titleAlign: SectionTextAlign = sectionTitleAlign ?? 'center';
+	const bodyAlign: SectionTextAlign = sectionBodyAlign ?? titleAlign;
+
 	const [activeCategory, setActiveCategory] = useState('Все');
 
 	const filteredProjects =
@@ -32,9 +42,20 @@ export default function PortfolioV1({
 			<SectionBackground variant='orbs-pprimary' />
 			<Container>
 				<div className='container px-4 md:px-6'>
-					<SectionTitle title={title} subtitle={subtitle} description={description} />
+					<SectionTitle
+						variant={sectionTitleVariant}
+						title={title}
+						subtitle={subtitle}
+						description={description}
+						align={titleAlign}
+						descriptionAlign={bodyAlign}
+					/>
 
-					<div className='flex flex-wrap justify-center gap-2 mb-12'>
+					<div
+						className={cn(
+							'mb-12 flex flex-wrap gap-2',
+							flexJustifyFromAlign(bodyAlign),
+						)}>
 						{categories.map((category) => {
 							return (
 								<Button

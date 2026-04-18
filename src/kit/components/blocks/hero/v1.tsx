@@ -9,10 +9,9 @@ import {
 	CarouselPrevious,
 	type CarouselApi,
 } from '@/kit/components/ui/carousel';
-import { Button } from '@/kit/components/ui/button';
 import { cn } from '@/lib/utils';
+import { KitCtaButton } from '@/kit/components/shared/kit-cta-button';
 import { Container } from '@/kit/components/shared/container';
-import Link from 'next/link';
 import Image from 'next/image';
 import { THeroContent } from './type';
 import { getContentPositionX, getContentPositionY } from './utils/utils';
@@ -75,13 +74,16 @@ export default function HeroV1({ slides }: THeroContent) {
 											{slide.description}
 										</p>
 										<div className={cn('flex gap-2', getContentPositionX(slide.contentPosition.x))}>
-											{slide.buttons.map((button, index) => {
-												return (
-													<Button size='lg' asChild key={index}>
-														<Link href={button.link}>{button.label}</Link>
-													</Button>
-												);
-											})}
+											{slide.buttons.map((button, index) => (
+												<KitCtaButton
+													key={`${button.link}-${index}`}
+													href={button.link}
+													label={button.label}
+													modal={button.modal}
+													size='lg'
+													variant={index === 0 ? 'default' : 'outline'}
+												/>
+											))}
 										</div>
 									</div>
 								</div>

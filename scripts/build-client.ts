@@ -63,6 +63,16 @@ async function build() {
 			await fs.copy(sharedDir, path.join(OUTPUT_DIR, 'src/components/shared'));
 		}
 
+		const kitHooksDir = path.join(SOURCE_DIR, 'kit/hooks');
+		if (await fs.pathExists(kitHooksDir)) {
+			await fs.copy(kitHooksDir, path.join(OUTPUT_DIR, 'src/components/hooks'));
+		}
+
+		const kitFormsDir = path.join(SOURCE_DIR, 'kit/components/forms');
+		if (await fs.pathExists(kitFormsDir)) {
+			await fs.copy(kitFormsDir, path.join(OUTPUT_DIR, 'src/components/forms'));
+		}
+
 		console.log(chalk.yellow('🏗️  Копируем Lib папку...'));
 		const libDir = path.join(SOURCE_DIR, 'lib');
 		if (await fs.pathExists(libDir)) {
@@ -305,6 +315,8 @@ async function rewriteImportsInOutput() {
 			code = code.replaceAll('@/kit/components/ui/', '@/components/ui/');
 			// Shared
 			code = code.replaceAll('@/kit/components/shared/', '@/components/shared/');
+			// Kit hooks (не под kit/components)
+			code = code.replaceAll('@/kit/hooks/', '@/components/hooks/');
 			// Blocks (sometimes blocks import other blocks)
 			code = code.replaceAll('@/kit/components/blocks/', '@/components/blocks/');
 

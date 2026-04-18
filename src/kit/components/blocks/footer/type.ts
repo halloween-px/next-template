@@ -1,3 +1,5 @@
+import type { SiteModalId } from '@/kit/features/site-modals';
+
 export type FooterLink = {
 	label: string;
 	href: string;
@@ -25,6 +27,7 @@ export type FooterCta = {
 	label: string;
 	href: string;
 	variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link';
+	modal?: SiteModalId;
 };
 
 export type TFooterContent = {

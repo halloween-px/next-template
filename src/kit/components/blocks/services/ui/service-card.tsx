@@ -1,22 +1,33 @@
+import {
+	cardHoverGradientOverlayVariants,
+	cardHoverIconWrapVariants,
+	cardHoverRootVariants,
+	type CardHoverPreset,
+} from '@/kit/components/shared/interactive-card/card-hover-variants';
 import { DynamicIcon } from '@/kit/components/shared/dynamic-icon';
 import { Badge } from '@/kit/components/ui/badge';
 import { Card } from '@/kit/components/ui/card';
-import { TServicesCard } from '../types';
 import { Typography } from '@/kit/components/ui/typography';
+import { cn } from '@/lib/utils';
+import { TServicesCard } from '../types';
 
 type ServiceCardProps = {
 	service: TServicesCard;
+	/** Переопределяет `service.cardHover` (например превью вариантов в редакторе). */
+	hoverPreset?: CardHoverPreset;
 };
 
-export const ServiceCard = ({ service }: ServiceCardProps) => {
+export const ServiceCard = ({ service, hoverPreset }: ServiceCardProps) => {
+	const preset = hoverPreset ?? service.cardHover ?? 'lift';
+
 	return (
-		<Card className='p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-border/50 group bg-card/80 backdrop-blur-sm relative overflow-hidden'>
-			<div
-				className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-			/>
+		<Card className={cn(cardHoverRootVariants({ preset }))}>
+			{service.gradient && (
+				<div className={cn(cardHoverGradientOverlayVariants({ preset }), service.gradient)} />
+			)}
 
 			<div className='flex flex-col h-full relative z-10'>
-				<div className='w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg'>
+				<div className={cn(cardHoverIconWrapVariants({ preset }))}>
 					<DynamicIcon name={service.icon || ''} className='w-7 h-7 text-primary' />
 				</div>
 				<Typography.Title level={6} weight='semibold'>

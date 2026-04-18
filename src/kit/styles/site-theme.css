@@ -1,0 +1,15 @@
+/**
+ * Scoped-палитры из `src/styles/themes` (см. `palettes/*.css`).
+ * Подключайте там, где нужна изолированная тема по `data-site-palette`.
+ */
+@import './palettes/slate.css';
+@import './palettes/zinc.css';
+@import './palettes/neutral.css';
+@import './palettes/stone.css';
+@import './palettes/gray.css';
+@import './palettes/violet.css';
+@import './palettes/rose.css';
+@import './palettes/emerald.css';
+@import './palettes/ocean.css';
+@import './palettes/sunset.css';
+@import './palettes/yellow.css';

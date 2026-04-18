@@ -6,19 +6,17 @@ import { redirect } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/kit/components/ui/form';
 import { cn } from '@/lib/utils';
-import { useMutation } from '@/kit/hooks/useMutation';
+import { useLoginMutation } from '@/lib/api/hooks/use-auth-mutations';
 import { defaultLoginSchema, LoginInput, loginSchema } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { API_ROUTES } from '@/config/api-routes';
 import { useUserContext } from '@/kit/components/providers/user-provider';
-import { TUser } from '@/kit/stores/slices/auth-store';
 import { IconAplle } from '../../../../public/icons/IconApple';
 import { IconGoogle } from '../../../../public/icons/IconGoogle';
 import { IconGitHub } from '../../../../public/icons/IconGitHub';
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'form'>) {
 	const { setUser } = useUserContext();
-	const { mutate, isLoading } = useMutation<TUser>(API_ROUTES.auth.login);
+	const loginMutation = useLoginMutation();
 	const form = useForm<LoginInput>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: defaultLoginSchema,
@@ -27,10 +25,13 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
 	const { control, handleSubmit } = form;
 
 	const onSubmit = async (data: LoginInput) => {
-		const user = (await mutate(data)).data || null;
-		if (!user) return;
-		setUser(user);
-		redirect('/');
+		try {
+			const user = await loginMutation.mutateAsync(data);
+			setUser(user);
+			redirect('/');
+		} catch {
+			// тост из useLoginMutation
+		}
 	};
 
 	return (
@@ -89,7 +90,11 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
 							</FormItem>
 						)}
 					/>
-					<Button type='submit' className='w-full' loading={isLoading} disabled={isLoading}>
+					<Button
+						type='submit'
+						className='w-full'
+						loading={loginMutation.isPending}
+						disabled={loginMutation.isPending}>
 						Войти
 					</Button>
 					<div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'>
